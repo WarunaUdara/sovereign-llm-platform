@@ -1,0 +1,82 @@
+# Redis for LibreChat resumable streams and shared state across replicas (ADR 0015).
+# Ephemeral by design: stream state is recoverable by re-asking; nothing durable lives here.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: redis
+  labels: {app.kubernetes.io/name: redis, app.kubernetes.io/part-of: sovereign-llm}
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels: {app.kubernetes.io/name: redis, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app.kubernetes.io/name: redis}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: redis, app.kubernetes.io/part-of: sovereign-llm}
+    spec:
+      serviceAccountName: redis
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: redis
+          # Digest-pinned mirror of redis:8.2.3-alpine (images/images.lock.yaml).
+          image: redis:8.2.3-alpine
+          args: ["--save", "", "--appendonly", "no", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru"]
+          ports:
+            - {name: redis, containerPort: 6379}
+          readinessProbe:
+            exec: {command: ["redis-cli", "ping"]}
+            periodSeconds: 5
+          livenessProbe:
+            exec: {command: ["redis-cli", "ping"]}
+            periodSeconds: 20
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 250m, memory: 192Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+            runAsNonRoot: true
+          volumeMounts:
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: tmp
+          emptyDir: {sizeLimit: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels: {app.kubernetes.io/name: redis, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  selector: {app.kubernetes.io/name: redis}
+  ports:
+    - {name: redis, port: 6379, targetPort: redis}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis-ingress-from-librechat
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: redis}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: librechat}
+      ports:
+        - {protocol: TCP, port: 6379}
+  egress: []

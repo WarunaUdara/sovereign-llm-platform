@@ -1,0 +1,97 @@
+# MongoDB backs LibreChat's users, conversations, and settings. Pinned digest is set by the overlay.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mongo
+  labels: {app.kubernetes.io/name: mongo}
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels: {app.kubernetes.io/name: mongo, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  type: ClusterIP
+  selector: {app.kubernetes.io/name: mongo}
+  ports:
+    - name: mongo
+      port: 27017
+      targetPort: mongo
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-data
+  labels: {app.kubernetes.io/name: mongo}
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: standard-rwo
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels: {app.kubernetes.io/name: mongo, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  replicas: 1
+  # Recreate, not RollingUpdate: a single RWO volume cannot be attached to two pods at once.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: {app.kubernetes.io/name: mongo}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: mongo, app.kubernetes.io/part-of: sovereign-llm}
+    spec:
+      serviceAccountName: mongo
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 60
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: mongo
+          image: mongo:8.0.20   # overlay replaces with the mirrored, digest-pinned image
+          args: ["--bind_ip_all", "--quiet"]
+          ports:
+            - name: mongo
+              containerPort: 27017
+          readinessProbe:
+            tcpSocket: {port: mongo}
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket: {port: mongo}
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests: {cpu: 100m, memory: 256Mi}
+            limits: {cpu: 500m, memory: 768Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+            runAsNonRoot: true
+          volumeMounts:
+            - {name: data, mountPath: /data/db}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: mongo-data}
+        - name: tmp
+          emptyDir: {sizeLimit: 64Mi}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mongo
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: mongo}

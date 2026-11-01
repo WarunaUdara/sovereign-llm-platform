@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: llm-serving
+
+resources:
+  - ../../base
+  - ../../../monitoring
+
+# Written by scripts/build-model-image.sh. Never edit by hand; a tag would be mutable.
+images:
+  - name: model-endpoint
+    newName: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/model-endpoint
+    digest: sha256:1042f4fb199f50e7d0e8156b0acfee2cfcec2ff669015f42272b6f8cfa0966f7

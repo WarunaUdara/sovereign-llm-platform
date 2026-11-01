@@ -1,0 +1,33 @@
+# Grafana is reachable only through kubectl port-forward (operator). It may query only the Managed Prometheus frontend.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+spec:
+  podSelector: {}
+  policyTypes: [Ingress, Egress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: grafana-egress-to-frontend
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: grafana}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: gmp-public}
+          podSelector:
+            matchLabels: {app: frontend}
+      ports:
+        - {protocol: TCP, port: 9090}
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+          podSelector:
+            matchLabels: {k8s-app: kube-dns}
+      ports:
+        - {protocol: UDP, port: 53}
+        - {protocol: TCP, port: 53}

@@ -1,0 +1,33 @@
+# Cloud Armor attached to the LibreChat backend (per-IP rate limit defined in OpenTofu).
+apiVersion: networking.gke.io/v1
+kind: GCPBackendPolicy
+metadata:
+  name: librechat-armor
+  namespace: chat
+spec:
+  default:
+    securityPolicy: llm-lab-edge-armor
+    # Default is 30 s, shorter than a slow CPU reply. Streamed responses need minutes of headroom.
+    timeoutSec: 600
+  targetRef:
+    group: ""
+    kind: Service
+    name: librechat
+---
+# Health checks use the readiness endpoint, so an unhealthy backend stops receiving traffic at the LB.
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: librechat-health
+  namespace: chat
+spec:
+  default:
+    config:
+      type: HTTP
+      httpHealthCheck:
+        requestPath: /readyz
+        port: 3080
+  targetRef:
+    group: ""
+    kind: Service
+    name: librechat

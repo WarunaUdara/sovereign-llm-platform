@@ -1,0 +1,13 @@
+# The load generator needs the inference key and nothing else. This class exposes exactly one Secret Manager
+# secret, so a compromised k6 pod cannot read the LibreChat JWT or encryption keys.
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: k6-inference-key
+  labels: {app.kubernetes.io/name: k6, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  provider: gke
+  parameters:
+    secrets: |
+      - resourceName: "projects/40427773756/secrets/llm-inference-key/versions/latest"
+        fileName: "LLM_API_KEY"

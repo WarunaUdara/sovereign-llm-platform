@@ -1,0 +1,110 @@
+# Default deny for the chat namespace, then the narrowest allows. Dataplane V2 enforces these.
+# Every edge in the allow list is listed in one place so an auditor can read the whole topology here.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: chat
+spec:
+  podSelector: {}
+  policyTypes: [Ingress, Egress]
+---
+# Google Front Ends and health checks for the global external ALB reach LibreChat on 3080 only.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: librechat-ingress-from-lb
+  namespace: chat
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: librechat}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - ipBlock: {cidr: 130.211.0.0/22}
+        - ipBlock: {cidr: 35.191.0.0/16}
+      ports:
+        - {protocol: TCP, port: 3080}
+---
+# LibreChat talks to MongoDB, and to the model endpoint in the llm-serving namespace. Nothing else.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: librechat-egress
+  namespace: chat
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: librechat}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: mongo}
+      ports:
+        - {protocol: TCP, port: 27017}
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: llm-serving}
+          podSelector:
+            matchLabels: {app.kubernetes.io/name: gemma-chat}
+      ports:
+        - {protocol: TCP, port: 8080}
+    # Shared stream state: LibreChat reaches the Redis in its own namespace on 6379 (ADR 0015).
+    - to:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: redis}
+      ports:
+        - {protocol: TCP, port: 6379}
+    # Chat model: Gemma 4 E2B (llm-serving/gemma-chat). Retrieval: LibreChat may call the embedding service (EmbeddingGemma 2) and grounded-chat in llm-serving.
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: llm-serving}
+          podSelector:
+            matchLabels: {app.kubernetes.io/name: embedding-endpoint}
+      ports:
+        - {protocol: TCP, port: 8080}
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: llm-serving}
+          podSelector:
+            matchLabels: {app.kubernetes.io/name: grounded-chat}
+      ports:
+        - {protocol: TCP, port: 8080}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mongo-ingress-from-librechat
+  namespace: chat
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: mongo}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: librechat}
+      ports:
+        - {protocol: TCP, port: 27017}
+---
+# DNS for every pod in the namespace (service names must resolve). Nothing else leaves the cluster.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: chat
+spec:
+  podSelector: {}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+          podSelector:
+            matchLabels: {k8s-app: kube-dns}
+        # GKE NodeLocal DNSCache: pods reach DNS via the node-local listener and the kube-dns service IP.
+        - ipBlock: {cidr: 169.254.20.10/32}
+        - ipBlock: {cidr: 10.30.0.10/32}
+      ports:
+        - {protocol: UDP, port: 53}
+        - {protocol: TCP, port: 53}

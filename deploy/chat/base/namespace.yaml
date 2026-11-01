@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: chat
+  labels:
+    app.kubernetes.io/part-of: sovereign-llm
+    # Lets the chat namespace reach the model namespace. The model's ingress policy selects on this label.
+    llm.platform/gateway: "true"
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted

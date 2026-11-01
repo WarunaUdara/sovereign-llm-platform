@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: llm-serving
+resources:
+  - gemma-chat.yaml
+images:
+  - name: gemma-chat:v1
+    newName: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/gemma-chat
+    digest: sha256:57035ce04b8faeec75fcb932f80ec61011dfb9ad22726ce8fb570c12dacb28dc

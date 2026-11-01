@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-endpoint
+  labels:
+    app.kubernetes.io/name: model-endpoint
+    app.kubernetes.io/part-of: sovereign-llm
+spec:
+  # Two replicas: a single node loss no longer takes the model down. Spread across nodes (below).
+  replicas: 2
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # one extra replica during rollout keeps capacity at two
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: model-endpoint
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: model-endpoint
+        app.kubernetes.io/part-of: sovereign-llm
+    spec:
+      serviceAccountName: model-endpoint
+      automountServiceAccountToken: false
+      # Prefer different nodes for the replicas, so one node failure leaves one replica serving.
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: model-endpoint
+      # Long enough for an in-flight stream to finish; llama-server drains on SIGTERM (verify in game day).
+      terminationGracePeriodSeconds: 120
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: llama-server
+          # Placeholder name. The GKE overlay rewrites it to the digest-pinned Artifact Registry image
+          # that has the model baked in at /models.
+          image: model-endpoint
+          imagePullPolicy: IfNotPresent   # overlay pins by digest; never a mutable tag
+          args:
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8080"
+            - --model
+            - /models/qwen2.5-0.5b-instruct-q4_k_m.gguf
+            - --alias
+            - qwen2.5-0.5b-instruct
+            - --api-key-file
+            - /etc/llm/api-keys/api-keys
+            - --metrics
+            - --no-webui
+            - --ctx-size
+            - "8192"           # shared pool across slots; with --parallel 2 each slot gets 4096 tokens
+            - --parallel
+            - "2"
+            - --n-predict
+            - "512"            # hard cap on output tokens per request
+            - --timeout
+            - "300"
+            - --cache-ram
+            - "256"            # default is 8192 MiB, larger than this pod's memory limit
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          # Model load can take tens of seconds on a cold node: startup probe gives it up to 120s.
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 20
+            failureThreshold: 3
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: "1"
+              memory: 1Gi
+            limits:
+              cpu: "2"
+              memory: 1536Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+          volumeMounts:
+            - name: api-keys
+              mountPath: /etc/llm/api-keys
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: api-keys
+          csi:
+            driver: secrets-store-gke.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: model-secrets
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi

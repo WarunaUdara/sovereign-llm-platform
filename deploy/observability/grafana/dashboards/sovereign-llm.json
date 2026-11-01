@@ -1,0 +1,442 @@
+{
+  "uid": "sovereign-llm-model",
+  "title": "Sovereign LLM: model serving",
+  "tags": [
+    "sovereign-llm",
+    "llama.cpp"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": false,
+  "refresh": "10s",
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Model health: scrape up (1 = healthy)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(up{top_level_controller_name=\"model-endpoint\"})",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Requests in flight (peak in window)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max_over_time(sum(llamacpp:requests_processing)[$__range:30s])",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ],
+      "description": "A stat panel evaluates its instant query at the right edge of the time range, which is idle after a load test. max_over_time over $__range reports what actually happened inside the window instead of the last scrape."
+    },
+    {
+      "type": "stat",
+      "title": "Requests deferred (peak in window)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max_over_time(sum(llamacpp:requests_deferred)[$__range:30s])",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ],
+      "description": "Above zero means at least one request waited for a slot: that is the saturation point of this deployment (2 replicas x 2 slots)."
+    },
+    {
+      "type": "stat",
+      "title": "Tokens generated (selected window)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(llamacpp:tokens_predicted_total[$__range]))",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ],
+      "description": "Follows the dashboard time picker rather than a fixed 24 h window, so a figure can be cited against an exact range."
+    },
+    {
+      "type": "timeseries",
+      "title": "Generation rate (tokens/s, all slots)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(llamacpp:tokens_predicted_total[5m]))",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Prompt rate (tokens/s, all slots)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 6,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(llamacpp:prompt_tokens_total[5m]))",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Prefill speed (tokens/s per request, measured)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 14,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(llamacpp:prompt_tokens_total[5m])) / sum(rate(llamacpp:prompt_seconds_total[5m]))",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Generation speed (tokens/s per request, measured)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 14,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(llamacpp:tokens_predicted_total[5m])) / sum(rate(llamacpp:tokens_predicted_seconds_total[5m]))",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests in flight over time",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 22,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(llamacpp:requests_processing)",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Deferred requests over time",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 22,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(llamacpp:requests_deferred)",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Peak slot use (% of 4 slots)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 30,
+        "w": 8,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 * max_over_time(sum(llamacpp:requests_processing)[$__range:30s]) / 4",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ],
+      "description": "Capacity is 2 replicas x 2 slots (--parallel 2). One hundred percent means every slot was busy at the peak of the selected window."
+    },
+    {
+      "type": "timeseries",
+      "title": "Batching efficiency (busy slots per decode, avg)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 8,
+        "y": 30,
+        "w": 8,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg(llamacpp:n_busy_slots_per_decode)",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ],
+      "description": "How many slots llama_decode() batched together on average. Near 2 means the two slots were coalesced into one decode, which is where CPU serving gets its throughput.",
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Queue pressure (deferred requests)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "gmp"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 16,
+        "y": 30,
+        "w": 8,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(llamacpp:requests_deferred)",
+          "range": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gmp"
+          }
+        }
+      ],
+      "description": "Requests waiting for a free slot. The sweep in load/k6-streaming.js drives 1, 2, 4, 6 and 8 concurrent users to locate the point where this leaves zero.",
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      }
+    }
+  ]
+}

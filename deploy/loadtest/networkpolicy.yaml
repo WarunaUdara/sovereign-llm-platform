@@ -1,0 +1,18 @@
+# The load generator may reach the model on 8080 and DNS, and nothing else. Scoped to its own label.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: k6-egress-to-model
+  namespace: chat
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: k6}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: llm-serving}
+          podSelector:
+            matchLabels: {app.kubernetes.io/name: model-endpoint}
+      ports:
+        - {protocol: TCP, port: 8080}

@@ -1,0 +1,148 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: grounded-chat
+  namespace: llm-serving
+  labels: {app.kubernetes.io/name: grounded-chat, app.kubernetes.io/part-of: sovereign-llm}
+  annotations:
+    # Workload Identity: reads the inference key only (ADR 0012).
+    iam.gke.io/gcp-service-account: llm-lab-model-secrets@llm-k8s-experimental.iam.gserviceaccount.com
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grounded-chat
+  namespace: llm-serving
+  labels: {app.kubernetes.io/name: grounded-chat, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  replicas: 1
+  strategy: {type: RollingUpdate, rollingUpdate: {maxSurge: 1, maxUnavailable: 0}}
+  selector:
+    matchLabels: {app.kubernetes.io/name: grounded-chat}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: grounded-chat, app.kubernetes.io/part-of: sovereign-llm}
+    spec:
+      serviceAccountName: grounded-chat
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: grounded-chat
+          image: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/grounded-chat@sha256:53c160630f6cc2b040a9e5eed42f92f344276331df8eb4b770db38cbee89ccd9
+          env:
+            - {name: PORT, value: "8080"}
+            - {name: EMBEDDING_BASE, value: "http://embedding-endpoint.llm-serving.svc.cluster.local:8080/v1"}
+            - {name: LLM_BASE, value: "http://gemma-chat.llm-serving.svc.cluster.local:8080/v1"}
+            - {name: MODEL, value: "gemma-4-e2b-it"}
+            - {name: TOP_K, value: "1"}
+          ports:
+            - {name: http, containerPort: 8080}
+          startupProbe:
+            httpGet: {path: /health, port: http}
+            periodSeconds: 2
+            failureThreshold: 30
+          readinessProbe:
+            httpGet: {path: /health, port: http}
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: {path: /health, port: http}
+            periodSeconds: 20
+            timeoutSeconds: 5
+          resources:
+            requests: {cpu: 100m, memory: 128Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+            runAsNonRoot: true
+          volumeMounts:
+            - {name: api-keys, mountPath: /etc/llm/api-keys, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: api-keys
+          csi:
+            driver: secrets-store-gke.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: grounded-secrets
+        - name: tmp
+          emptyDir: {sizeLimit: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grounded-chat
+  namespace: llm-serving
+  labels: {app.kubernetes.io/name: grounded-chat, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  type: ClusterIP
+  selector: {app.kubernetes.io/name: grounded-chat}
+  ports:
+    - {name: http, port: 8080, targetPort: http}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: grounded-chat-policy
+  namespace: llm-serving
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: grounded-chat}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: chat}
+      ports:
+        - {protocol: TCP, port: 8080}
+  egress:
+    - to:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: gemma-chat}
+      ports:
+        - {protocol: TCP, port: 8080}
+    - to:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: embedding-endpoint}
+      ports:
+        - {protocol: TCP, port: 8080}
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+          podSelector:
+            matchLabels: {k8s-app: kube-dns}
+        - ipBlock: {cidr: 169.254.20.10/32}
+        - ipBlock: {cidr: 10.30.0.10/32}
+      ports:
+        - {protocol: UDP, port: 53}
+        - {protocol: TCP, port: 53}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: grounded-chat
+  namespace: llm-serving
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: grounded-chat}
+---
+# The inference key only, from Secret Manager, through this pod's Workload Identity (ADR 0012).
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: grounded-secrets
+spec:
+  provider: gke
+  parameters:
+    secrets: |
+      - resourceName: "projects/40427773756/secrets/llm-api-keys/versions/latest"
+        fileName: "api-keys"

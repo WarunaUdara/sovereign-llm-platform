@@ -1,0 +1,25 @@
+# Least privilege: the managed collector may read ONLY the metrics token Secret, in llm-serving, and nothing else.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: read-model-metrics-token
+  namespace: llm-serving
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["llm-metrics-token"]
+    verbs: ["get", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: gmp-collector-read-model-metrics-token
+  namespace: llm-serving
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: read-model-metrics-token
+subjects:
+  - kind: ServiceAccount
+    name: collector
+    namespace: gmp-system

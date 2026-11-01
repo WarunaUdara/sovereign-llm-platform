@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: llm-serving
+resources:
+  - embedding.yaml
+images:
+  - name: embedding-endpoint:v1
+    newName: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/embedding-endpoint
+    digest: sha256:229d20cf97ed8a0d4df15669d9fd5fe7e855655596897d637cb333aa2d05d7a0

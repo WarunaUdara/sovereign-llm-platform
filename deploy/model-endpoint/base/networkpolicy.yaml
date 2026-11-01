@@ -1,0 +1,32 @@
+# Default deny for the serving namespace, then the narrowest allow: the model pod accepts traffic
+# only from namespaces labeled llm.platform/gateway=true on TCP 8080, and has NO egress at all.
+# Verified on kind (2026-10-29): a control pod in another namespace reaches the internet while the
+# model pod times out, so enforcement is real. Re-verify after any CNI or cluster change.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: model-endpoint-ingress-from-gateway
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: model-endpoint
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              llm.platform/gateway: "true"
+      ports:
+        - protocol: TCP
+          port: 8080

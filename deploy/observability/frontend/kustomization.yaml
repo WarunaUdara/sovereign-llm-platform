@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - frontend.yaml
+images:
+  - name: frontend:v0.15.3-gke.0
+    newName: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/frontend
+    digest: sha256:615ba6fcb89717b7346de2746e18fd6d31979cf89eb7b3583c7cea05be827664

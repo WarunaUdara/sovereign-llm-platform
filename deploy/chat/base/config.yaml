@@ -1,0 +1,85 @@
+# Non-secret LibreChat settings. Secrets come from the librechat-secrets Secret (created by scripts/create-chat-secrets.sh).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: librechat-env
+data:
+  HOST: "0.0.0.0"
+  PORT: "3080"
+  TRUST_PROXY: "1"                        # the Gateway is the only proxy in front of LibreChat
+  CONFIG_PATH: /app/config-override/librechat.yaml
+  MONGO_URI: mongodb://mongo.chat.svc.cluster.local:27017/LibreChat
+  # Public origin. Overlay sets the hostname.
+  DOMAIN_CLIENT: https://CHANGE-ME
+  DOMAIN_SERVER: https://CHANGE-ME
+  # Invite-only: an operator creates accounts with `npm run create-user`. No self-registration.
+  ALLOW_REGISTRATION: "false"
+  ALLOW_EMAIL_LOGIN: "true"
+  ALLOW_SOCIAL_LOGIN: "false"
+  ALLOW_SOCIAL_REGISTRATION: "false"
+  # No email provider in the lab, so there is no verification step to complete.
+  ALLOW_UNVERIFIED_EMAIL_LOGIN: "true"
+  LOGIN_MAX: "7"
+  # Shared stream state across replicas (ADR 0015).
+  USE_REDIS: "true"
+  USE_REDIS_STREAMS: "true"
+  REDIS_URI: redis://redis.chat.svc.cluster.local:6379
+  # No outbound search or RAG services in this lab.
+  SEARCH: "false"
+  # No model or provider keys in the chat UI. Model access is only through the custom endpoint below.
+  ANTHROPIC_API_KEY: "user_provided"
+  OPENAI_API_KEY: "user_provided"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: librechat-config
+data:
+  librechat.yaml: |
+    version: 1.3.17
+    cache: true
+    # Plain chat for a CPU model. Every feature below adds prompt text or a model call, and on this node
+    # a 5,000-token prompt takes minutes to prefill (about 32 tokens/s). Measured 2026-10-29: LibreChat's
+    # agent path sent 5,029 tokens for "hi" and timed out. Keep the prompt small.
+    interface:
+      fileSearch: false
+      presets: true
+      modelSelect: true
+      parameters: true
+      bookmarks: true
+      multiConvo: true
+      prompts:
+        use: true
+        create: false
+        share: false
+        public: false
+      agents:
+        use: false
+        create: false
+        share: false
+        public: false
+    endpoints:
+      agents:
+        # No tool or capability prompts are injected into the model's context.
+        capabilities: []
+        disableBuilder: true
+        # activityLabel calls an external provider (OpenAI). This lab has no internet route, so it is off.
+        activityLabel: false
+        reasoningLabel: false
+      custom:
+        - name: 'Grounded Sovereign LLM'
+          apiKey: '${LLM_API_KEY}'
+          baseURL: 'http://grounded-chat.llm-serving.svc.cluster.local:8080/v1'
+          models:
+            default: ['gemma-4-e2b-grounded']
+            fetch: false
+          titleConvo: false
+          modelDisplayLabel: 'Grounded Sovereign LLM (Gemma 4 + RAG)'
+        - name: 'Direct Sovereign LLM'
+          apiKey: '${LLM_API_KEY}'
+          baseURL: 'http://gemma-chat.llm-serving.svc.cluster.local:8080/v1'
+          models:
+            default: ['gemma-4-e2b-it']
+            fetch: false
+          titleConvo: false
+          modelDisplayLabel: 'Direct Sovereign LLM (Gemma 4 E2B)'

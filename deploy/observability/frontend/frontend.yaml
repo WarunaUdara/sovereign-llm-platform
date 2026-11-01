@@ -1,0 +1,87 @@
+# Managed Prometheus frontend: a Prometheus-compatible query API over Cloud Monitoring.
+# Grafana reads it with the standard Prometheus data source. No auth of its own: NetworkPolicy limits callers.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend
+  namespace: gmp-public
+  annotations:
+    # Workload Identity: this KSA acts as the read-only Google service account from OpenTofu.
+    iam.gke.io/gcp-service-account: llm-lab-gmp-frontend@llm-k8s-experimental.iam.gserviceaccount.com
+  labels: {app: frontend, app.kubernetes.io/part-of: sovereign-llm}
+automountServiceAccountToken: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: gmp-public
+  labels: {app: frontend, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: frontend}
+  template:
+    metadata:
+      labels: {app: frontend, app.kubernetes.io/part-of: sovereign-llm}
+    spec:
+      serviceAccountName: frontend
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: frontend
+          # Digest-pinned mirror of gke.gcr.io/prometheus-engine/frontend:v0.15.3-gke.0 (see images/images.lock.yaml).
+          image: frontend:v0.15.3-gke.0
+          args:
+            - --web.listen-address=:9090
+            - --query.project-id=llm-k8s-experimental
+          ports:
+            - {name: web, containerPort: 9090}
+          livenessProbe:
+            httpGet: {path: /-/healthy, port: web}
+            periodSeconds: 20
+          readinessProbe:
+            httpGet: {path: /-/ready, port: web}
+            periodSeconds: 10
+          resources:
+            requests: {cpu: 50m, memory: 128Mi}
+            limits: {cpu: 300m, memory: 384Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+            runAsNonRoot: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: gmp-public
+  labels: {app: frontend, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  clusterIP: None
+  selector: {app: frontend}
+  ports:
+    - {name: web, port: 9090, targetPort: web}
+---
+# Only Grafana may query the frontend.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend-ingress-from-grafana
+  namespace: gmp-public
+spec:
+  podSelector:
+    matchLabels: {app: frontend}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: observability}
+          podSelector:
+            matchLabels: {app.kubernetes.io/name: grafana}
+      ports:
+        - {protocol: TCP, port: 9090}

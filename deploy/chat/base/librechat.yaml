@@ -1,0 +1,123 @@
+# LibreChat: the chat UI and API. Invite-only, talks to the sovereign model through its OpenAI-compatible API.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: librechat
+  labels: {app.kubernetes.io/name: librechat}
+  annotations:
+    # Workload Identity: reads the librechat-* secrets and the inference key only.
+    iam.gke.io/gcp-service-account: llm-lab-chat-secrets@llm-k8s-experimental.iam.gserviceaccount.com
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librechat
+  labels: {app.kubernetes.io/name: librechat, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  type: ClusterIP
+  selector: {app.kubernetes.io/name: librechat}
+  ports:
+    - name: http
+      port: 3080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librechat
+  labels: {app.kubernetes.io/name: librechat, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  # Two replicas share stream state through Redis (ADR 0015).
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxSurge: 1, maxUnavailable: 0}
+  selector:
+    matchLabels: {app.kubernetes.io/name: librechat}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: librechat, app.kubernetes.io/part-of: sovereign-llm}
+    spec:
+      serviceAccountName: librechat
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 60
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: librechat
+          image: librechat:v0.8.8   # overlay pins the mirrored digest
+          # Export the Secret Manager files (CSI mount) into the environment, then start the app unchanged.
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              export CREDS_KEY="$(cat /mnt/secrets-store/CREDS_KEY)"
+              export CREDS_IV="$(cat /mnt/secrets-store/CREDS_IV)"
+              export JWT_SECRET="$(cat /mnt/secrets-store/JWT_SECRET)"
+              export JWT_REFRESH_SECRET="$(cat /mnt/secrets-store/JWT_REFRESH_SECRET)"
+              export LLM_API_KEY="$(cat /mnt/secrets-store/LLM_API_KEY)"
+              exec npm run backend
+          ports:
+            - name: http
+              containerPort: 3080
+          envFrom:
+            - configMapRef: {name: librechat-env}
+            # Secrets are read from the CSI mount in the start command (see below); no envFrom Secret.
+          # Readiness is /readyz (checks the app can serve), liveness is /livez (process is alive).
+          startupProbe:
+            httpGet: {path: /livez, port: http}
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            httpGet: {path: /readyz, port: http}
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet: {path: /livez, port: http}
+            periodSeconds: 20
+            failureThreshold: 3
+            timeoutSeconds: 5
+          resources:
+            requests: {cpu: 150m, memory: 512Mi}
+            limits: {cpu: "1", memory: 1Gi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+            runAsNonRoot: true
+          volumeMounts:
+            - {name: config, mountPath: /app/config-override/librechat.yaml, subPath: librechat.yaml, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+            - {name: logs, mountPath: /app/logs}
+            # LibreChat writes runtime state under ./data (violation counters). The root filesystem is read only.
+            - {name: data, mountPath: /app/data}
+            # The CSI mount is what makes the driver sync librechat-secrets. Files are not read by the app.
+            - {name: secrets-store, mountPath: /mnt/secrets-store, readOnly: true}
+      volumes:
+        - name: config
+          configMap: {name: librechat-config}
+        - name: tmp
+          emptyDir: {sizeLimit: 128Mi}
+        - name: logs
+          emptyDir: {sizeLimit: 128Mi}
+        - name: data
+          emptyDir: {sizeLimit: 64Mi}
+        - name: secrets-store
+          csi:
+            driver: secrets-store-gke.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: chat-secrets
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: librechat
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: librechat}

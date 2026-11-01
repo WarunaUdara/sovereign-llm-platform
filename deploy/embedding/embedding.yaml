@@ -1,0 +1,144 @@
+# Embedding service for retrieval: EmbeddingGemma 2 (Q8_0) on the pinned llama.cpp runtime.
+# Same hardening as the chat model. Callers: only the chat namespace. No egress.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: embedding-endpoint
+  labels: {app.kubernetes.io/name: embedding-endpoint, app.kubernetes.io/part-of: sovereign-llm}
+  annotations:
+    # Workload Identity: reads the inference key only (ADR 0012).
+    iam.gke.io/gcp-service-account: llm-lab-model-secrets@llm-k8s-experimental.iam.gserviceaccount.com
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: embedding-endpoint
+  labels: {app.kubernetes.io/name: embedding-endpoint, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  replicas: 1
+  strategy: {type: RollingUpdate, rollingUpdate: {maxSurge: 1, maxUnavailable: 0}}
+  selector:
+    matchLabels: {app.kubernetes.io/name: embedding-endpoint}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: embedding-endpoint, app.kubernetes.io/part-of: sovereign-llm}
+    spec:
+      serviceAccountName: embedding-endpoint
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 60
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: llama-embedding
+          image: embedding-endpoint:v1   # overlay pins the digest
+          args:
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8080"
+            - --model
+            - /models/embeddinggemma-2-Q8_0.gguf
+            - --embedding
+            - --pooling
+            - mean
+            - --alias
+            - embeddinggemma-2
+            - --api-key-file
+            - /etc/llm/api-keys/api-keys
+            - --ctx-size
+            - "2048"
+            - --parallel
+            - "2"
+            - --batch-size
+            - "512"
+            - --no-webui
+            - --timeout
+            - "120"
+          ports:
+            - {name: http, containerPort: 8080}
+          startupProbe:
+            httpGet: {path: /health, port: http}
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            httpGet: {path: /health, port: http}
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: {path: /health, port: http}
+            periodSeconds: 20
+            timeoutSeconds: 5
+          resources:
+            requests: {cpu: 500m, memory: 512Mi}
+            limits: {cpu: "1", memory: 1Gi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+            runAsNonRoot: true
+          volumeMounts:
+            - {name: api-keys, mountPath: /etc/llm/api-keys, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: api-keys
+          csi:
+            driver: secrets-store-gke.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: embedding-secrets
+        - name: tmp
+          emptyDir: {sizeLimit: 64Mi}
+---
+# The inference key only, from Secret Manager, through this pod's Workload Identity (ADR 0012).
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: embedding-secrets
+spec:
+  provider: gke
+  parameters:
+    secrets: |
+      - resourceName: "projects/40427773756/secrets/llm-api-keys/versions/latest"
+        fileName: "api-keys"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: embedding-endpoint
+  labels: {app.kubernetes.io/name: embedding-endpoint, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  type: ClusterIP
+  selector: {app.kubernetes.io/name: embedding-endpoint}
+  ports:
+    - {name: http, port: 8080, targetPort: http}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: embedding-ingress-from-chat
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: embedding-endpoint}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: chat}
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: grounded-chat}
+      ports:
+        - {protocol: TCP, port: 8080}
+  egress: []
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: embedding-endpoint
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: embedding-endpoint}

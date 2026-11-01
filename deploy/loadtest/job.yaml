@@ -1,0 +1,60 @@
+# In-cluster k6 load generator. Runs in the chat namespace (where real clients are), so the test measures the
+# service through the same network policies a user's request would pass. The key comes from the chat Secret.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: k6-streaming
+  labels: {app.kubernetes.io/name: k6, app.kubernetes.io/part-of: sovereign-llm}
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: k6, app.kubernetes.io/part-of: sovereign-llm}
+    spec:
+      restartPolicy: Never
+      # Workload Identity: the CSI driver exchanges this token for the chat-secrets GSA, which can read the
+      # inference key. The token is not used by k6 itself.
+      serviceAccountName: librechat
+      automountServiceAccountToken: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 12345
+        runAsGroup: 12345
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: k6
+          # Digest-pinned mirror of grafana/k6:1.5.0 (see images/images.lock.yaml).
+          image: k6:1.5.0
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              export K6_BASE=http://model-endpoint.llm-serving.svc.cluster.local:8080
+              export K6_KEY="$(cat /mnt/inference-key/LLM_API_KEY)"
+              k6 run --summary-export /tmp/summary.json /scripts/k6-streaming.js
+              echo "=== SUMMARY-JSON ==="
+              cat /tmp/summary.json
+          env:
+            - {name: HOME, value: /tmp}
+          resources:
+            requests: {cpu: 500m, memory: 256Mi}
+            limits: {cpu: "1", memory: 512Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+            runAsNonRoot: true
+          volumeMounts:
+            - {name: scripts, mountPath: /scripts, readOnly: true}
+            - {name: inference-key, mountPath: /mnt/inference-key, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: scripts
+          configMap: {name: k6-script}
+        - name: inference-key
+          csi:
+            driver: secrets-store-gke.csi.k8s.io
+            readOnly: true
+            volumeAttributes: {secretProviderClass: k6-inference-key}
+        - name: tmp
+          emptyDir: {sizeLimit: 64Mi}

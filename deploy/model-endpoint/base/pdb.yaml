@@ -1,0 +1,12 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: model-endpoint
+  labels:
+    app.kubernetes.io/name: model-endpoint
+spec:
+  # maxUnavailable 1 (not minAvailable 1): with one replica, minAvailable 1 would block every node drain.
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: model-endpoint

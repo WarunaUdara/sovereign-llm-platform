@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-endpoint
+  labels:
+    app.kubernetes.io/name: model-endpoint
+    app.kubernetes.io/part-of: sovereign-llm
+spec:
+  # ClusterIP only. Nothing outside the cluster reaches the model directly.
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: model-endpoint
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP
