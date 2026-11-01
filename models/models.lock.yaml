@@ -1,0 +1,77 @@
+# Pinned model and runtime artifacts. The only source of truth for what gets served.
+# Changing any value is a pull request that must also update docs/ and the license review.
+# Verified on 2026-10-29 against the Hugging Face LFS metadata and the GHCR index.
+
+model:
+  name: qwen2.5-0.5b-instruct
+  family: Qwen2.5
+  variant: 0.5B-Instruct
+  quantization: Q4_K_M
+  format: GGUF
+  license: Apache-2.0            # reviewed; Qwen2.5 0.5B is Apache-2.0 (see ADR 0002)
+  source:
+    repo: Qwen/Qwen2.5-0.5B-Instruct-GGUF
+    revision: 9217f5db79a29953eb74d5343926648285ec7e67   # commit SHA; the URL above must use this, not `main`
+    file: qwen2.5-0.5b-instruct-q4_k_m.gguf
+    url: https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/9217f5db79a29953eb74d5343926648285ec7e67/qwen2.5-0.5b-instruct-q4_k_m.gguf
+  size_bytes: 491400032
+  sha256: 74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db
+
+runtime:
+  name: llama.cpp llama-server
+  image: ghcr.io/ggml-org/llama.cpp:server
+  # Multi-arch index digest (linux/amd64 and linux/arm64). arm64 for the local M4 kind node,
+  # amd64 for any future GKE node. Pull by digest, never by tag.
+  index_digest: sha256:8052c13edd987de8858f8150031e025ac3d66823f09cf3ec8220899c4abce220
+  license: MIT
+
+# Embedding model for retrieval (RAG). Separate section; fetched with: scripts/fetch-model.sh embedding
+# Text tower only (the mmproj files are vision/audio encoders and are not used). Q8_0, not float16:
+# the model card warns that float16 produces silent NaN or degraded embeddings.
+embedding:
+  name: embeddinggemma-2
+  family: EmbeddingGemma 2
+  variant: text tower, 768-dimensional output with Matryoshka truncation
+  quantization: Q8_0
+  format: GGUF
+  license: Apache-2.0
+  source:
+    repo: ggml-org/embeddinggemma-2-GGUF
+    revision: 58faf90940886df2d62be555c8765d00dac362c5
+    file: embeddinggemma-2-Q8_0.gguf
+    url: https://huggingface.co/ggml-org/embeddinggemma-2-GGUF/resolve/58faf90940886df2d62be555c8765d00dac362c5/embeddinggemma-2-Q8_0.gguf
+  size_bytes: 309855456
+  sha256: 2188ac1deca4b77dffefd603c2776a9d76d9d74ec01841392982ebb840b09135
+
+# Generator candidate for the grounding test (Plan v3). Not yet served. Fetch: scripts/fetch-model.sh generator
+generator:
+  name: qwen2.5-1.5b-instruct
+  family: Qwen2.5
+  variant: 1.5B-Instruct
+  quantization: Q4_K_M
+  format: GGUF
+  license: Apache-2.0
+  source:
+    repo: Qwen/Qwen2.5-1.5B-Instruct-GGUF
+    revision: 91cad51170dc346986eccefdc2dd33a9da36ead9
+    file: qwen2.5-1.5b-instruct-q4_k_m.gguf
+    url: https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/91cad51170dc346986eccefdc2dd33a9da36ead9/qwen2.5-1.5b-instruct-q4_k_m.gguf
+  size_bytes: 1117320736
+  sha256: 6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e
+
+# Chat model: Gemma 4 E2B instruct, QAT Q4_0. Apache-2.0 per the model card (not gated).
+# Served by the chat endpoint once the grounding gate and the chat test pass (see docs/PLAN-V3).
+gemma:
+  name: gemma-4-e2b-it
+  family: Gemma 4
+  variant: E2B instruct, quantization-aware trained
+  quantization: Q4_0 (QAT)
+  format: GGUF
+  license: Apache-2.0
+  source:
+    repo: google/gemma-4-E2B-it-qat-q4_0-gguf
+    revision: 675cff42a74c774d6cb76f76d8eacb49b48c9b93
+    file: gemma-4-E2B_q4_0-it.gguf
+    url: https://huggingface.co/google/gemma-4-E2B-it-qat-q4_0-gguf/resolve/675cff42a74c774d6cb76f76d8eacb49b48c9b93/gemma-4-E2B_q4_0-it.gguf
+  size_bytes: 3349516256
+  sha256: fa401b55b07ee70a54c6dae3903c783a6e65064312529ea57175cb5f8dec6634

@@ -1,0 +1,63 @@
+# Third-party images mirrored into Artifact Registry. Digests are what GKE pulls.
+# Regenerate with scripts/mirror-images.sh; do not edit digests by hand.
+mirrors:
+  argocd:
+    source: quay.io/argoproj/argocd:v3.5.6
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/argocd:v3.5.6
+    digest: sha256:8e5cc5bb008df8a09dba439462e58c94c55b7735888d3ebde0c25fc05e4e5335
+  gmp-frontend:
+    source: gke.gcr.io/prometheus-engine/frontend:v0.15.3-gke.0
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/frontend:v0.15.3-gke.0
+    digest: sha256:615ba6fcb89717b7346de2746e18fd6d31979cf89eb7b3583c7cea05be827664
+  grafana:
+    source: docker.io/grafana/grafana:13.2.5-distroless
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/grafana:13.2.5-distroless
+    digest: sha256:53e52b5b1f0a596593169b9fc0a598f8a63dbbd0168a00f3e839ba65bcd07098
+  istio-install-cni-distroless:
+    source: docker.io/istio/install-cni:1.30.7-distroless
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/istio/install-cni:1.30.7-distroless
+    digest: sha256:5d65fa948ff28fac54d99f272205a3f71ee84e609d7e46792eecd77db0501d79
+  istio-pilot-distroless:
+    source: docker.io/istio/pilot:1.30.7-distroless
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/istio/pilot:1.30.7-distroless
+    digest: sha256:337c5423c9b235855aadca8762f1ac3f0ce584833e49c50176382382099ff201
+  istio-proxyv2-distroless:
+    source: docker.io/istio/proxyv2:1.30.7-distroless
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/istio/proxyv2:1.30.7-distroless
+    digest: sha256:773c3509b49424dbde78ae67a4ce2cd0228c814a665d6037312f890eb1038b19
+  istio-ztunnel-distroless:
+    source: docker.io/istio/ztunnel:1.30.7-distroless
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/istio/ztunnel:1.30.7-distroless
+    digest: sha256:02f183c632d08fe25317e6f7ffd057384f5d54620e620264af429e0d4dbf8889
+  k6:
+    source: docker.io/grafana/k6:1.5.0
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/k6:1.5.0
+    digest: sha256:2072ea9eafa596532d9aee0cc0e0a50cfb0e7fb703981a46179af5f4f22c5ea4
+  keda:
+    source: ghcr.io/kedacore/keda:2.21.0
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/keda:2.21.0
+    digest: sha256:81fe6547ce8d1cc29273f887b76507e9b853e5bc1f875ec23fe60061a38ed809
+  keda-admission-webhooks:
+    source: ghcr.io/kedacore/keda-admission-webhooks:2.21.0
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/keda-admission-webhooks:2.21.0
+    digest: sha256:e1969628cca6123e32eea13c47c75817091af2657fa68d9d0d58a8620d1b75b1
+  keda-metrics-apiserver:
+    source: ghcr.io/kedacore/keda-metrics-apiserver:2.21.0
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/keda-metrics-apiserver:2.21.0
+    digest: sha256:255375037fe592732eeb554743aae360c2da88cf0b9b1258d0a987ef885f0881
+  librechat:
+    source: registry.librechat.ai/librechat-ai/librechat:v0.8.8
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/librechat:v0.8.8
+    digest: sha256:5b706bcee1ca154a1e2987303aaeca0eb27f97919cccee4bb604226c2f8abf61
+  mongo:
+    source: mongo:8.0.20
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/mongo:8.0.20
+    digest: sha256:098862b1339f031900ca66cf8fef799e616d6324fa41b9a263f2ec899552c1ef
+  redis:
+    source: docker.io/library/redis:7.2.11-alpine
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/redis:7.2.11-alpine
+    digest: sha256:1a34bdba051ecd8a58ec8a3cc460acef697a1605e918149cc53d920673c1a0a7
+  redis-argocd:
+    source: public.ecr.aws/docker/library/redis:8.2.3-alpine
+    mirror: us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/redis:8.2.3-alpine
+    digest: sha256:08ad0b1d280850169a790dba1393ff7a90aef951fc19632cf4d3ce4f78e679ba

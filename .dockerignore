@@ -1,0 +1,3 @@
+# Keep the build context small: only the model files the Dockerfiles copy.
+*
+!models/cache/*.gguf
