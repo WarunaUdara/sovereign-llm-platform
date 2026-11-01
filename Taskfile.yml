@@ -1,0 +1,106 @@
+version: "3"
+
+# Lifecycle entry points. Cloud resources are created only by the explicit `cloud:*` tasks.
+# Cost gate: docs/COST_GUARDRAILS.md and evidence/cloud-gate.md.
+
+vars:
+  PROJECT: llm-k8s-experimental
+  REGION: us-central1
+  ZONE: us-central1-a
+  CLUSTER: llm-lab
+  INFRA: infra/gcp
+  KCTX: gke_llm-k8s-experimental_us-central1-a_llm-lab
+  IMAGE_TAG: v1
+
+env:
+  CLOUDSDK_CORE_PROJECT: "{{.PROJECT}}"
+
+tasks:
+  default:
+    cmds:
+      - task --list
+
+  preflight:
+    desc: Check tools, model hash, and gcloud identity. Read-only, no billable calls.
+    cmds:
+      - ./scripts/preflight.sh
+      - 'gcloud auth list --filter=status:ACTIVE --format="value(account)" | grep -q . || { echo no active gcloud account; exit 1; }'
+      - 'echo "gcloud project for this lab is {{.PROJECT}}"'
+
+  model:fetch:
+    desc: Download the pinned model and verify its SHA-256.
+    cmds:
+      - ./scripts/fetch-model.sh
+
+  lint:
+    desc: Validate manifests and scripts. No cloud calls.
+    cmds:
+      - kubectl kustomize deploy/model-endpoint/overlays/gke >/dev/null
+      - for f in scripts/*.sh; do bash -n "$f"; done
+      - cd {{.INFRA}} && tofu fmt -check -recursive && tofu validate
+      - echo "lint OK"
+
+  cloud:plan:
+    desc: OpenTofu plan for the GKE lab. Creates nothing.
+    dir: "{{.INFRA}}"
+    cmds:
+      - tofu plan -input=false -out=tfplan
+
+  cloud:up:
+    desc: Create or update the GKE cluster and Artifact Registry (requires an existing terraform.tfvars).
+    dir: "{{.INFRA}}"
+    cmds:
+      - tofu apply -input=false tfplan
+      - gcloud container clusters get-credentials {{.CLUSTER}} --zone {{.ZONE}} --project {{.PROJECT}}
+
+  image:build:
+    desc: Build the model image (linux/amd64), push to Artifact Registry, pin the digest in the overlay.
+    deps: ["model:fetch"]
+    cmds:
+      - ./scripts/build-model-image.sh {{.IMAGE_TAG}}
+
+  deploy:
+    desc: Create the API key secret and apply the GKE overlay.
+    cmds:
+      - kubectl config use-context {{.KCTX}}
+      - ./scripts/create-api-key.sh
+      - kubectl apply -k deploy/model-endpoint/overlays/gke
+      - kubectl -n llm-serving rollout status deploy/model-endpoint --timeout=600s
+
+  chat:deploy:
+    desc: Create chat secrets and apply the LibreChat front door (chat namespace, Gateway, policies).
+    cmds:
+      - kubectl config use-context {{.KCTX}}
+      - ./scripts/create-chat-secrets.sh
+      - kubectl apply -k deploy/chat/overlays/gke
+      - kubectl -n chat rollout status deploy/librechat --timeout=600s
+
+  chat:smoke:
+    desc: Public smoke test of the front door (TLS, redirect, auth gate, invite-only).
+    cmds:
+      - ./scripts/smoke-chat.sh
+
+  test:smoke:
+    desc: OpenAI, Anthropic-shape, streaming, auth, limits, privacy, and egress checks.
+    cmds:
+      - kubectl config use-context {{.KCTX}}
+      - ./scripts/smoke-test.sh
+
+  cloud:up-all:
+    desc: Full cloud bring-up on an already-planned stack. Requires the gate in evidence/cloud-gate.md.
+    cmds:
+      - task: lint
+      - task: cloud:up
+      - task: image:build
+      - task: deploy
+      - task: test:smoke
+
+  teardown:dry-run:
+    desc: Show exactly what teardown would delete. Deletes nothing.
+    cmds:
+      - ./scripts/teardown-gcp.sh --dry-run
+
+  teardown:
+    desc: Delete the lab. Asks for the project ID to confirm.
+    cmds:
+      - ./scripts/teardown-gcp.sh
