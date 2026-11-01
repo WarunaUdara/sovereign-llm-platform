@@ -1,0 +1,17 @@
+# gitleaks configuration. Extends the default ruleset with two narrow, reviewed allowlists.
+title = "sovereign-llm-platform"
+
+[extend]
+useDefault = true
+
+# Shell-variable references are not credentials (for example: Authorization: Bearer $KEY).
+[[allowlists]]
+description = "Shell-variable bearer references are not credentials"
+regexes = ['''Bearer \$\{?[A-Za-z_][A-Za-z0-9_]*\}?''']
+
+# scripts/smoke-test.sh builds multi-line curl commands whose Authorization header takes the key from a
+# shell variable read from .secrets/ at run time. The rule matches the multi-line command text, not a value.
+[[allowlists]]
+description = "smoke-test.sh: curl header uses a runtime shell variable, reviewed"
+paths = ['''scripts/smoke-test\.sh''']
+rules = ["curl-auth-header"]

@@ -1,0 +1,22 @@
+# Model weights and local artifacts: large, licensed separately, never committed.
+models/cache/
+# Secrets: generated locally, never committed.
+.secrets/
+*.key
+*.pem
+.env
+.env.*
+# Generated evidence and load-test output (commit summaries, not raw logs).
+load/results/
+evidence/raw/
+# Tooling
+.DS_Store
+.task/
+.terraform/
+*.tfstate
+*.tfstate.*
+kubeconfig*
+terraform.tfvars
+*.auto.tfvars
+tfplan
+.codegraph/
