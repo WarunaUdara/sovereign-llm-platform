@@ -1,0 +1,84 @@
+# CI for the sovereign LLM lab. Secret zero: no GitHub secrets exist. Google access comes from
+# Workload Identity Federation, only on main, only in the build job (the only job with id-token: write).
+# Every third-party action is pinned to a commit SHA.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets-scan:
+    name: secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        env:
+          GITLEAKS_ENABLE_SUMMARY: "true"
+
+  static:
+    name: static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: opentofu/setup-opentofu@9d84900f3238fab8cd84ce47d658d25dd008be2f # v1
+        with:
+          tofu_version: 1.12.5
+      - name: OpenTofu format and validate
+        working-directory: infra/gcp
+        run: |
+          tofu fmt -check -recursive
+          tofu init -backend=false -input=false
+          tofu validate
+      - name: Shell syntax
+        run: for f in scripts/*.sh; do bash -n "$f"; done
+      - name: Render every Kustomize overlay
+        run: |
+          kubectl kustomize deploy/model-endpoint/overlays/gke >/dev/null
+          kubectl kustomize deploy/chat/overlays/gke >/dev/null
+          kubectl kustomize deploy/observability/frontend >/dev/null
+          kubectl kustomize deploy/observability/grafana >/dev/null
+      - name: Reject mutable image tags in rendered manifests
+        run: |
+          for o in deploy/model-endpoint/overlays/gke deploy/chat/overlays/gke deploy/observability/frontend deploy/observability/grafana; do
+            if kubectl kustomize "$o" | grep -E '^\s*image:' | grep -v -E '@sha256:[0-9a-f]{64}\s*$'; then
+              echo "::error::unpinned image in $o"; exit 1
+            fi
+          done
+          echo "all images pinned by a 64-hex sha256 digest"
+
+  build:
+    name: build and push model image (main only)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [secrets-scan, static]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write        # exchange the GitHub OIDC token for Google credentials. Nothing is stored.
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Fetch and verify the pinned model (SHA-256 checked)
+        run: ./scripts/fetch-model.sh
+      - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_CI_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@e427ad8a34f8676edf47cf7d7925499adf3eb74f # v2
+      - uses: docker/setup-buildx-action@v3
+      - name: Build, push, and pin the model image
+        env:
+          PROJECT_ID: llm-k8s-experimental
+        run: ./scripts/build-model-image.sh "ci-${GITHUB_SHA::12}"
+      - name: Record the pinned digest
+        run: git diff -- deploy/model-endpoint/overlays/gke/kustomization.yaml | tee "$GITHUB_STEP_SUMMARY"
