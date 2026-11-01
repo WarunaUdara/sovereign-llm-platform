@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chat
+  namespace: argocd
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:WarunaUdara/sovereign-llm-platform.git
+    targetRevision: main
+    path: deploy/chat/overlays/gke
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: chat
+  # The API server fills defaults into HTTPRoute backendRefs (group, kind, weight). Ignore those fields so
+  # Argo reports real drift only.
+  ignoreDifferences:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      jqPathExpressions:
+        - .spec.rules[].backendRefs[]?.group
+        - .spec.rules[].backendRefs[]?.kind
+        - .spec.rules[].backendRefs[]?.weight
+        - .spec.parentRefs[]?.group
+        - .spec.parentRefs[]?.kind
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]

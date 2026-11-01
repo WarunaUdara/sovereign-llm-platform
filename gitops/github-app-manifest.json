@@ -1,0 +1,14 @@
+{
+  "name": "llm-lab-argocd-reader",
+  "url": "https://github.com/WarunaUdara/sovereign-llm-platform",
+  "description": "Read-only access for Argo CD to sync manifests from this repository.",
+  "public": false,
+  "default_permissions": {
+    "contents": "read",
+    "metadata": "read"
+  },
+  "default_events": [],
+  "hook_attributes": {
+    "active": false
+  }
+}
