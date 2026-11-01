@@ -1,0 +1,3 @@
+# Reviewed false positive (not a credential): scripts/smoke-test.sh, a multi-line curl whose header takes a
+# shell variable read from .secrets/ at run time. Recorded by fingerprint so the scan stays strict for everything else.
+0970f0d9f6d4aeec2d8bfec41b9f9ad14551c16f:scripts/smoke-test.sh:curl-auth-header:30

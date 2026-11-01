@@ -17,15 +17,18 @@ concurrency:
 
 jobs:
   secrets-scan:
-    name: secret scan (gitleaks)
+    name: secret scan (gitleaks, full history)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
-        env:
-          GITLEAKS_ENABLE_SUMMARY: "true"
+      # Direct CLI run over the full history with the repository's reviewed config. Pinned to a release.
+      # (The gitleaks action derives a commit range from the push event, which fails on a fresh history.)
+      - name: gitleaks
+        run: |
+          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.24.3 \
+            git /repo --config /repo/.gitleaks.toml --redact --exit-code 1
 
   static:
     name: static checks
@@ -60,7 +63,8 @@ jobs:
 
   build:
     name: build and push model image (main only)
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Runs only where the Workload Identity variables are set (the lab repository). Elsewhere it is skipped.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.GCP_WORKLOAD_IDENTITY_PROVIDER != ''
     needs: [secrets-scan, static]
     runs-on: ubuntu-latest
     permissions:
