@@ -1,0 +1,82 @@
+{
+ "model": "gemma-4-e2b-it",
+ "retrieval": false,
+ "total": 12,
+ "correct": 0,
+ "answerable_correct": "0/8",
+ "refusals_correct": "0/4",
+ "rows": [
+  {
+   "q": "When did Harbor Lane Bakery open?",
+   "refuse": false,
+   "ok": false,
+   "reply": "I do not have real-time information about specific business opening dates. Please check th"
+  },
+  {
+   "q": "How much does the cinnamon lattice loaf cost?",
+   "refuse": false,
+   "ok": false,
+   "reply": "Please provide more context, such as where you are looking to purchase the cinnamon lattic"
+  },
+  {
+   "q": "At what altitude does the Orion relay station orbi",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Orion relay station orbits Ceres at an altitude of approximately 100 km."
+  },
+  {
+   "q": "Which desk does the Orion station report to?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Orion station reports to the **Command Center**."
+  },
+  {
+   "q": "How many vacation days do employees accrue per mon",
+   "refuse": false,
+   "ok": false,
+   "reply": "Please provide the text of HR-7 so I can answer your question."
+  },
+  {
+   "q": "How long can unused vacation days roll over?",
+   "refuse": false,
+   "ok": false,
+   "reply": "It depends on your company's policy."
+  },
+  {
+   "q": "What efficiency does the Kestrel filter achieve fo",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Kestrel filter achieves a high efficiency for lead, typically around 99.99% or higher,"
+  },
+  {
+   "q": "How often must the Kestrel cartridge be replaced?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Kestrel cartridge should be replaced after each use or when the manufacturer recommend"
+  },
+  {
+   "q": "Who is the head baker at Harbor Lane Bakery?",
+   "refuse": true,
+   "ok": false,
+   "reply": "I do not have access to real-time or specific business personnel information like the head"
+  },
+  {
+   "q": "What is the boiling point of the Kestrel filter ho",
+   "refuse": true,
+   "ok": false,
+   "reply": "Please provide more context. I need more information to answer your question."
+  },
+  {
+   "q": "How many crew members work on the Orion station?",
+   "refuse": true,
+   "ok": false,
+   "reply": "I do not have real-time information on the current crew size of the Orion station."
+  },
+  {
+   "q": "What is the vacation policy for part-time staff?",
+   "refuse": true,
+   "ok": false,
+   "reply": "Please provide the company or context you are referring to so I can give you the correct v"
+  }
+ ]
+}

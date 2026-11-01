@@ -1,0 +1,82 @@
+{
+ "model": "qwen2.5-1.5b-instruct",
+ "retrieval": false,
+ "total": 12,
+ "correct": 0,
+ "answerable_correct": "0/8",
+ "refusals_correct": "0/4",
+ "rows": [
+  {
+   "q": "When did Harbor Lane Bakery open?",
+   "refuse": false,
+   "ok": false,
+   "reply": "Harbor Lane Bakery opened in 1999."
+  },
+  {
+   "q": "How much does the cinnamon lattice loaf cost?",
+   "refuse": false,
+   "ok": false,
+   "reply": "I'm sorry, but I don't have specific information on the cost of a cinnamon lattice loaf. T"
+  },
+  {
+   "q": "At what altitude does the Orion relay station orbi",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Orion relay station orbits Ceres at an altitude of approximately 1,000 kilometers."
+  },
+  {
+   "q": "Which desk does the Orion station report to?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Orion station reports to the International Space Station (ISS)."
+  },
+  {
+   "q": "How many vacation days do employees accrue per mon",
+   "refuse": false,
+   "ok": false,
+   "reply": "Under HR-7, employees accrue vacation days based on their length of service. Typically, fo"
+  },
+  {
+   "q": "How long can unused vacation days roll over?",
+   "refuse": false,
+   "ok": false,
+   "reply": "Unused vacation days typically do not roll over from one year to the next. They are usuall"
+  },
+  {
+   "q": "What efficiency does the Kestrel filter achieve fo",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Kestrel filter achieves an efficiency of approximately 99.99999999%."
+  },
+  {
+   "q": "How often must the Kestrel cartridge be replaced?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Kestrel 2000 and 3000 models require the Kestrel 2000/3000 cartridge to be replaced ev"
+  },
+  {
+   "q": "Who is the head baker at Harbor Lane Bakery?",
+   "refuse": true,
+   "ok": false,
+   "reply": "I'm sorry, but I don't have any specific information about the head baker at Harbor Lane B"
+  },
+  {
+   "q": "What is the boiling point of the Kestrel filter ho",
+   "refuse": true,
+   "ok": false,
+   "reply": "The boiling point of a Kestrel filter housing is not typically defined, as it is a solid m"
+  },
+  {
+   "q": "How many crew members work on the Orion station?",
+   "refuse": true,
+   "ok": false,
+   "reply": "The Orion station, also known as the International Space Station (ISS), has a crew of six "
+  },
+  {
+   "q": "What is the vacation policy for part-time staff?",
+   "refuse": true,
+   "ok": false,
+   "reply": "I'm sorry, but I don't have specific information about vacation policies for part-time sta"
+  }
+ ]
+}

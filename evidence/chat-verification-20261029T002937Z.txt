@@ -1,0 +1,28 @@
+# verification 2026-10-29T00:29:38Z
+## pods
+chat          librechat-6b6b95c499-trlf9                                 1/1   Running   0     16m
+chat          mongo-dc66c95bf-9595f                                      1/1   Running   0     69m
+gmp-system    collector-2rks6                                            2/2   Running   0     7m58s
+gmp-system    collector-vgfbd                                            2/2   Running   0     7m59s
+gmp-system    gmp-operator-55b86ddd-fp28c                                1/1   Running   0     21m
+llm-serving   model-endpoint-6d86cbd496-cwnrv                            1/1   Running   0     16m
+## nodes
+gke-llm-lab-inference-d7b6f002-jgk8   Ready   <none>   3h9m   v1.36.4-gke.2046003
+gke-llm-lab-inference-d7b6f002-trk8   Ready   <none>   68m    v1.36.4-gke.2046003
+## gateway
+Scheduled=True
+Accepted=True
+Programmed=True
+Ready=True
+networking.gke.io/GatewayHealthy=True
+## certificate
+ACTIVE
+## cloud armor attached
+gkegw1-p4uv-chat-librechat-3080-9ihbll0rzx28	https://www.googleapis.com/compute/v1/projects/llm-k8s-experimental/global/securityPolicies/llm-lab-edge-armor
+Attached=True
+## model smoke
+
+result: 10 passed, 0 failed
+## public smoke
+
+result: 7 passed, 0 failed

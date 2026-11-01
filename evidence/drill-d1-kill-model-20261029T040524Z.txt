@@ -1,0 +1,11 @@
+# D1 kill model pod  20261029T040524Z
+hypothesis: unavailable for about the cold start (30-60 s), then 200 again
+## before
+baseline probe: 200
+t=0 pod deleted
+t=12s first non-200: no response
+t=16s back to 200
+## result
+recovery_seconds=16 (hypothesis: 30-60)
+## after
+model-endpoint-7b5bcc9cb5-4gf9x 1/1 Running 25s

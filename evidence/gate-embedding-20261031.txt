@@ -1,0 +1,7 @@
+# Gate 2: pinned llama.cpp (ghcr.io/ggml-org/llama.cpp:server@sha256:8052c13e...) serves EmbeddingGemma 2
+model: ggml-org/embeddinggemma-2-GGUF @ 58faf909, embeddinggemma-2-Q8_0.gguf (sha256 2188ac1d...), flags: --embedding --pooling mean
+result: dims=768, finite=true, L2 norm=1.0
+semantic check (dot product of normalized vectors):
+  query ~ relevant passage   0.877
+  query ~ unrelated passage  0.552
+verdict: pass

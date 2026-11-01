@@ -1,0 +1,82 @@
+{
+ "model": "gemma-4-e2b-it",
+ "retrieval": true,
+ "total": 12,
+ "correct": 12,
+ "answerable_correct": "8/8",
+ "refusals_correct": "4/4",
+ "rows": [
+  {
+   "q": "When did Harbor Lane Bakery open?",
+   "refuse": false,
+   "ok": true,
+   "reply": "Harbor Lane Bakery opened on 14 March 2019."
+  },
+  {
+   "q": "How much does the cinnamon lattice loaf cost?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The cinnamon lattice loaf is sold for 6 euros."
+  },
+  {
+   "q": "At what altitude does the Orion relay station orbi",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Orion relay station orbits Ceres at 412 kilometres."
+  },
+  {
+   "q": "Which desk does the Orion station report to?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Orion station reports to the Lunar Ops Desk."
+  },
+  {
+   "q": "How many vacation days do employees accrue per mon",
+   "refuse": false,
+   "ok": true,
+   "reply": "Employees accrue 1.75 vacation days per month under HR-7."
+  },
+  {
+   "q": "How long can unused vacation days roll over?",
+   "refuse": false,
+   "ok": true,
+   "reply": "Unused days roll over for at most 9 months."
+  },
+  {
+   "q": "What efficiency does the Kestrel filter achieve fo",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Kestrel water filter removes lead at 99.2 percent efficiency."
+  },
+  {
+   "q": "How often must the Kestrel cartridge be replaced?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Kestrel cartridge needs to be replaced every 3 months."
+  },
+  {
+   "q": "Who is the head baker at Harbor Lane Bakery?",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "What is the boiling point of the Kestrel filter ho",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "How many crew members work on the Orion station?",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "What is the vacation policy for part-time staff?",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  }
+ ]
+}

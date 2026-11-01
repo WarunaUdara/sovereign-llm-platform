@@ -1,0 +1,82 @@
+{
+ "model": "qwen2.5-0.5b-instruct",
+ "retrieval": true,
+ "total": 12,
+ "correct": 9,
+ "answerable_correct": "5/8",
+ "refusals_correct": "4/4",
+ "rows": [
+  {
+   "q": "When did Harbor Lane Bakery open?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "How much does the cinnamon lattice loaf cost?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The cinnamon lattice loaf costs 6 euros."
+  },
+  {
+   "q": "At what altitude does the Orion relay station orbi",
+   "refuse": false,
+   "ok": false,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "Which desk does the Orion station report to?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Lunar Ops Desk reports to the Orion station."
+  },
+  {
+   "q": "How many vacation days do employees accrue per mon",
+   "refuse": false,
+   "ok": false,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "How long can unused vacation days roll over?",
+   "refuse": false,
+   "ok": true,
+   "reply": "9 months"
+  },
+  {
+   "q": "What efficiency does the Kestrel filter achieve fo",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Kestrel water filter achieves 99.2 percent efficiency for lead."
+  },
+  {
+   "q": "How often must the Kestrel cartridge be replaced?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Kestrel water filter needs its cartridge replaced every 3 months."
+  },
+  {
+   "q": "Who is the head baker at Harbor Lane Bakery?",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "What is the boiling point of the Kestrel filter ho",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "How many crew members work on the Orion station?",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  },
+  {
+   "q": "What is the vacation policy for part-time staff?",
+   "refuse": true,
+   "ok": true,
+   "reply": "The context does not say."
+  }
+ ]
+}

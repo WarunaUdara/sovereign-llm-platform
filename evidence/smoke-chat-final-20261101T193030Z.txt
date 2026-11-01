@@ -1,0 +1,12 @@
+== transport
+  PASS  plain HTTP redirects (got 301)
+  PASS  TLS certificate verifies (verify_result=0)
+  PASS  UI served over HTTPS (got 200)
+  PASS  page title is LibreChat
+== authentication
+  PASS  conversation list needs login without a session (got 401)
+  PASS  bad credentials never return a session token
+== invite-only
+  PASS  self-registration is closed (got 403)
+
+result: 7 passed, 0 failed

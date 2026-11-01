@@ -1,0 +1,82 @@
+{
+ "model": "gemma-4-e2b-grounded",
+ "retrieval": false,
+ "total": 12,
+ "correct": 8,
+ "answerable_correct": "8/8",
+ "refusals_correct": "0/4",
+ "rows": [
+  {
+   "q": "When did Harbor Lane Bakery open?",
+   "refuse": false,
+   "ok": true,
+   "reply": "Harbor Lane Bakery opened on 14 March 2019 [Source p1]."
+  },
+  {
+   "q": "How much does the cinnamon lattice loaf cost?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The cinnamon lattice loaf is sold for 6 euros [Source p1]."
+  },
+  {
+   "q": "At what altitude does the Orion relay station orbi",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Orion relay station orbits Ceres at 412 kilometres [Source p2]."
+  },
+  {
+   "q": "Which desk does the Orion station report to?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Orion relay station reports to the Lunar Ops Desk [Source p2]."
+  },
+  {
+   "q": "How many vacation days do employees accrue per mon",
+   "refuse": false,
+   "ok": true,
+   "reply": "Employees accrue 1.75 vacation days per month under Policy HR-7 [Source p3]."
+  },
+  {
+   "q": "How long can unused vacation days roll over?",
+   "refuse": false,
+   "ok": true,
+   "reply": "Unused vacation days roll over for at most 9 months [Source p3]."
+  },
+  {
+   "q": "What efficiency does the Kestrel filter achieve fo",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Kestrel water filter removes lead at 99.2 percent efficiency [Source p4]."
+  },
+  {
+   "q": "How often must the Kestrel cartridge be replaced?",
+   "refuse": false,
+   "ok": true,
+   "reply": "The Kestrel water filter needs its cartridge replaced every 3 months [Source p4]."
+  },
+  {
+   "q": "Who is the head baker at Harbor Lane Bakery?",
+   "refuse": true,
+   "ok": false,
+   "reply": "The context does not contain this information."
+  },
+  {
+   "q": "What is the boiling point of the Kestrel filter ho",
+   "refuse": true,
+   "ok": false,
+   "reply": "The context does not contain this information."
+  },
+  {
+   "q": "How many crew members work on the Orion station?",
+   "refuse": true,
+   "ok": false,
+   "reply": "The context does not contain this information."
+  },
+  {
+   "q": "What is the vacation policy for part-time staff?",
+   "refuse": true,
+   "ok": false,
+   "reply": "The context does not contain this information."
+  }
+ ]
+}

@@ -1,0 +1,5 @@
+# ADR 0015 drill: kill one LibreChat replica during a live stream
+hypothesis: the in-flight stream ends with a clear error (no silent hang); the next request succeeds
+in-flight result: stream ended with error 'Server is shutting down' (    5406 bytes received before)
+next request result: "text":"Tokyo
+verdict: hypothesis held (clear error, recovered on next request)

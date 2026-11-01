@@ -1,0 +1,82 @@
+{
+ "model": "qwen2.5-0.5b-instruct",
+ "retrieval": false,
+ "total": 12,
+ "correct": 0,
+ "answerable_correct": "0/8",
+ "refusals_correct": "0/4",
+ "rows": [
+  {
+   "q": "When did Harbor Lane Bakery open?",
+   "refuse": false,
+   "ok": false,
+   "reply": "Harbor Lane Bakery opened in 1999."
+  },
+  {
+   "q": "How much does the cinnamon lattice loaf cost?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The cost of the cinnamon lattice loaf can vary depending on the store or bakery. Typically"
+  },
+  {
+   "q": "At what altitude does the Orion relay station orbi",
+   "refuse": false,
+   "ok": false,
+   "reply": "Orion relay station orbits Ceres at an altitude of about 100 kilometers (62 miles)."
+  },
+  {
+   "q": "Which desk does the Orion station report to?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Orion station reports to the United States Space Command."
+  },
+  {
+   "q": "How many vacation days do employees accrue per mon",
+   "refuse": false,
+   "ok": false,
+   "reply": "Under HR-7, employees accrue vacation days monthly."
+  },
+  {
+   "q": "How long can unused vacation days roll over?",
+   "refuse": false,
+   "ok": false,
+   "reply": "Unused vacation days can roll over to the next calendar year."
+  },
+  {
+   "q": "What efficiency does the Kestrel filter achieve fo",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Kestrel filter is designed to filter out lead, achieving high efficiency in lead detec"
+  },
+  {
+   "q": "How often must the Kestrel cartridge be replaced?",
+   "refuse": false,
+   "ok": false,
+   "reply": "The Kestrel cartridge is typically replaced every 100-150 hours of use."
+  },
+  {
+   "q": "Who is the head baker at Harbor Lane Bakery?",
+   "refuse": true,
+   "ok": false,
+   "reply": "The head baker at Harbor Lane Bakery is John."
+  },
+  {
+   "q": "What is the boiling point of the Kestrel filter ho",
+   "refuse": true,
+   "ok": false,
+   "reply": "The boiling point of the Kestrel filter housing is typically around 100°C."
+  },
+  {
+   "q": "How many crew members work on the Orion station?",
+   "refuse": true,
+   "ok": false,
+   "reply": "There are 5 crew members working on the Orion station."
+  },
+  {
+   "q": "What is the vacation policy for part-time staff?",
+   "refuse": true,
+   "ok": false,
+   "reply": "Part-time staff have the option to take paid vacation days."
+  }
+ ]
+}

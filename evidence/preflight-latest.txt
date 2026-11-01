@@ -1,0 +1,25 @@
+== tools
+  ok    gcloud
+  ok    tofu
+  ok    kubectl
+  ok    gke-gcloud-auth-plugin
+  ok    gh
+  ok    docker
+  ok    shasum
+  ok    openssl
+  ok    curl
+== docker (Colima)
+  ok    daemon reachable
+  ok    no local containers running
+== gcloud identity and project
+  ok    active account: set (not shown)
+  ok    project llm-k8s-experimental is ACTIVE
+  ok    billing linked
+== gh identity
+  ok    gh logged in
+== model artifact
+  ok    model present and sha256 matches models/models.lock.yaml
+== cost gate
+  ok    evidence/cloud-gate.md present
+
+preflight passed

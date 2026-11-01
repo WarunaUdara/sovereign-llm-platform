@@ -1,0 +1,12 @@
+# true TTFT, qwen2.5-0.5b-instruct, 20s per level, max_tokens=48
+# client: python3 inside the serving pod, loopback to 127.0.0.1:8080
+
+users | req | err | ttft p50 (ms) | ttft p95 (ms) | ttft max (ms) | stream p50 (ms) | stream p95 (ms) | chunks/s
+------+-----+-----+---------------+---------------+---------------+-----------------+-----------------+---------
+    1 |   9 |   0 |          50.6 |         290.8 |         290.8 |          1384.1 |          1574.8 |    13.95
+    2 |  14 |   0 |          84.6 |         117.1 |         135.3 |          1919.0 |          2118.8 |    21.70
+    4 |  24 |   0 |         939.0 |        1834.8 |        1836.3 |          2784.1 |          3845.0 |    37.20
+    6 |  18 |   0 |        4826.9 |        6355.2 |        6446.2 |          7513.7 |          8910.7 |    27.90
+    8 |  20 |   0 |        7181.2 |        8597.9 |        8690.3 |          9843.3 |         11057.0 |    31.00
+
+# ttft is the first 'data:' line of the stream, not the response headers.

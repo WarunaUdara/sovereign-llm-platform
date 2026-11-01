@@ -1,0 +1,1087 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: /Users/warunaudarasampath/Documents/projects/llmOps-vLLM-k8s/load/k6-streaming.js
+        output: -
+
+     scenarios: (100.00%) 3 scenarios, 6 max VUs, 3m40s max duration (incl. graceful stop):
+              * users_1: 1 looping VUs for 1m0s (exec: chat, gracefulStop: 30s)
+              * users_2: 2 looping VUs for 1m0s (exec: chat, startTime: 1m5s, gracefulStop: 30s)
+              * users_4: 4 looping VUs for 1m0s (exec: chat, startTime: 2m10s, gracefulStop: 30s)
+
+
+running (0m01.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   2% ] 1 VUs    0m01.0s/1m0s
+users_2 • [   0% ] waiting  1m04.0s
+users_4 • [   0% ] waiting  2m09.0s
+
+running (0m02.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   3% ] 1 VUs    0m02.0s/1m0s
+users_2 • [   0% ] waiting  1m03.0s
+users_4 • [   0% ] waiting  2m08.0s
+
+running (0m03.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   5% ] 1 VUs    0m03.0s/1m0s
+users_2 • [   0% ] waiting  1m02.0s
+users_4 • [   0% ] waiting  2m07.0s
+
+running (0m04.0s), 1/6 VUs, 1 complete and 0 interrupted iterations
+users_1   [   7% ] 1 VUs    0m04.0s/1m0s
+users_2 • [   0% ] waiting  1m01.0s
+users_4 • [   0% ] waiting  2m06.0s
+
+running (0m05.0s), 1/6 VUs, 1 complete and 0 interrupted iterations
+users_1   [   8% ] 1 VUs    0m05.0s/1m0s
+users_2 • [   0% ] waiting  1m00.0s
+users_4 • [   0% ] waiting  2m05.0s
+
+running (0m06.0s), 1/6 VUs, 1 complete and 0 interrupted iterations
+users_1   [  10% ] 1 VUs    0m06.0s/1m0s
+users_2 • [   0% ] waiting  0m59.0s
+users_4 • [   0% ] waiting  2m04.0s
+time="2026-10-31T10:44:33+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m07.0s), 1/6 VUs, 2 complete and 0 interrupted iterations
+users_1   [  12% ] 1 VUs    0m07.0s/1m0s
+users_2 • [   0% ] waiting  0m58.0s
+users_4 • [   0% ] waiting  2m03.0s
+
+running (0m08.0s), 1/6 VUs, 3 complete and 0 interrupted iterations
+users_1   [  13% ] 1 VUs    0m08.0s/1m0s
+users_2 • [   0% ] waiting  0m57.0s
+users_4 • [   0% ] waiting  2m02.0s
+
+running (0m09.0s), 1/6 VUs, 3 complete and 0 interrupted iterations
+users_1   [  15% ] 1 VUs    0m09.0s/1m0s
+users_2 • [   0% ] waiting  0m56.0s
+users_4 • [   0% ] waiting  2m01.0s
+
+running (0m10.0s), 1/6 VUs, 3 complete and 0 interrupted iterations
+users_1   [  17% ] 1 VUs    0m10.0s/1m0s
+users_2 • [   0% ] waiting  0m55.0s
+users_4 • [   0% ] waiting  2m00.0s
+time="2026-10-31T10:44:37+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m11.0s), 1/6 VUs, 4 complete and 0 interrupted iterations
+users_1   [  18% ] 1 VUs    0m11.0s/1m0s
+users_2 • [   0% ] waiting  0m54.0s
+users_4 • [   0% ] waiting  1m59.0s
+
+running (0m12.0s), 1/6 VUs, 5 complete and 0 interrupted iterations
+users_1   [  20% ] 1 VUs    0m12.0s/1m0s
+users_2 • [   0% ] waiting  0m53.0s
+users_4 • [   0% ] waiting  1m58.0s
+
+running (0m13.0s), 1/6 VUs, 5 complete and 0 interrupted iterations
+users_1   [  22% ] 1 VUs    0m13.0s/1m0s
+users_2 • [   0% ] waiting  0m52.0s
+users_4 • [   0% ] waiting  1m57.0s
+
+running (0m14.0s), 1/6 VUs, 5 complete and 0 interrupted iterations
+users_1   [  23% ] 1 VUs    0m14.0s/1m0s
+users_2 • [   0% ] waiting  0m51.0s
+users_4 • [   0% ] waiting  1m56.0s
+
+running (0m15.0s), 1/6 VUs, 6 complete and 0 interrupted iterations
+users_1   [  25% ] 1 VUs    0m15.0s/1m0s
+users_2 • [   0% ] waiting  0m50.0s
+users_4 • [   0% ] waiting  1m55.0s
+
+running (0m16.0s), 1/6 VUs, 6 complete and 0 interrupted iterations
+users_1   [  27% ] 1 VUs    0m16.0s/1m0s
+users_2 • [   0% ] waiting  0m49.0s
+users_4 • [   0% ] waiting  1m54.0s
+
+running (0m17.0s), 1/6 VUs, 6 complete and 0 interrupted iterations
+users_1   [  28% ] 1 VUs    0m17.0s/1m0s
+users_2 • [   0% ] waiting  0m48.0s
+users_4 • [   0% ] waiting  1m53.0s
+
+running (0m18.0s), 1/6 VUs, 7 complete and 0 interrupted iterations
+users_1   [  30% ] 1 VUs    0m18.0s/1m0s
+users_2 • [   0% ] waiting  0m47.0s
+users_4 • [   0% ] waiting  1m52.0s
+
+running (0m19.0s), 1/6 VUs, 7 complete and 0 interrupted iterations
+users_1   [  32% ] 1 VUs    0m19.0s/1m0s
+users_2 • [   0% ] waiting  0m46.0s
+users_4 • [   0% ] waiting  1m51.0s
+
+running (0m20.0s), 1/6 VUs, 7 complete and 0 interrupted iterations
+users_1   [  33% ] 1 VUs    0m20.0s/1m0s
+users_2 • [   0% ] waiting  0m45.0s
+users_4 • [   0% ] waiting  1m50.0s
+time="2026-10-31T10:44:48+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m21.0s), 1/6 VUs, 8 complete and 0 interrupted iterations
+users_1   [  35% ] 1 VUs    0m21.0s/1m0s
+users_2 • [   0% ] waiting  0m44.0s
+users_4 • [   0% ] waiting  1m49.0s
+
+running (0m22.0s), 1/6 VUs, 9 complete and 0 interrupted iterations
+users_1   [  37% ] 1 VUs    0m22.0s/1m0s
+users_2 • [   0% ] waiting  0m43.0s
+users_4 • [   0% ] waiting  1m48.0s
+
+running (0m23.0s), 1/6 VUs, 9 complete and 0 interrupted iterations
+users_1   [  38% ] 1 VUs    0m23.0s/1m0s
+users_2 • [   0% ] waiting  0m42.0s
+users_4 • [   0% ] waiting  1m47.0s
+
+running (0m24.0s), 1/6 VUs, 9 complete and 0 interrupted iterations
+users_1   [  40% ] 1 VUs    0m24.0s/1m0s
+users_2 • [   0% ] waiting  0m41.0s
+users_4 • [   0% ] waiting  1m46.0s
+
+running (0m25.0s), 1/6 VUs, 9 complete and 0 interrupted iterations
+users_1   [  42% ] 1 VUs    0m25.0s/1m0s
+users_2 • [   0% ] waiting  0m40.0s
+users_4 • [   0% ] waiting  1m45.0s
+time="2026-10-31T10:44:52+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m26.0s), 1/6 VUs, 10 complete and 0 interrupted iterations
+users_1   [  43% ] 1 VUs    0m26.0s/1m0s
+users_2 • [   0% ] waiting  0m39.0s
+users_4 • [   0% ] waiting  1m44.0s
+
+running (0m27.0s), 1/6 VUs, 11 complete and 0 interrupted iterations
+users_1   [  45% ] 1 VUs    0m27.0s/1m0s
+users_2 • [   0% ] waiting  0m38.0s
+users_4 • [   0% ] waiting  1m43.0s
+
+running (0m28.0s), 1/6 VUs, 11 complete and 0 interrupted iterations
+users_1   [  47% ] 1 VUs    0m28.0s/1m0s
+users_2 • [   0% ] waiting  0m37.0s
+users_4 • [   0% ] waiting  1m42.0s
+
+running (0m29.0s), 1/6 VUs, 11 complete and 0 interrupted iterations
+users_1   [  48% ] 1 VUs    0m29.0s/1m0s
+users_2 • [   0% ] waiting  0m36.0s
+users_4 • [   0% ] waiting  1m41.0s
+
+running (0m30.0s), 1/6 VUs, 12 complete and 0 interrupted iterations
+users_1   [  50% ] 1 VUs    0m30.0s/1m0s
+users_2 • [   0% ] waiting  0m35.0s
+users_4 • [   0% ] waiting  1m40.0s
+
+running (0m31.0s), 1/6 VUs, 12 complete and 0 interrupted iterations
+users_1   [  52% ] 1 VUs    0m31.0s/1m0s
+users_2 • [   0% ] waiting  0m34.0s
+users_4 • [   0% ] waiting  1m39.0s
+
+running (0m32.0s), 1/6 VUs, 12 complete and 0 interrupted iterations
+users_1   [  53% ] 1 VUs    0m32.0s/1m0s
+users_2 • [   0% ] waiting  0m33.0s
+users_4 • [   0% ] waiting  1m38.0s
+time="2026-10-31T10:44:59+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m33.0s), 1/6 VUs, 13 complete and 0 interrupted iterations
+users_1   [  55% ] 1 VUs    0m33.0s/1m0s
+users_2 • [   0% ] waiting  0m32.0s
+users_4 • [   0% ] waiting  1m37.0s
+
+running (0m34.0s), 1/6 VUs, 14 complete and 0 interrupted iterations
+users_1   [  57% ] 1 VUs    0m34.0s/1m0s
+users_2 • [   0% ] waiting  0m31.0s
+users_4 • [   0% ] waiting  1m36.0s
+
+running (0m35.0s), 1/6 VUs, 14 complete and 0 interrupted iterations
+users_1   [  58% ] 1 VUs    0m35.0s/1m0s
+users_2 • [   0% ] waiting  0m30.0s
+users_4 • [   0% ] waiting  1m35.0s
+
+running (0m36.0s), 1/6 VUs, 14 complete and 0 interrupted iterations
+users_1   [  60% ] 1 VUs    0m36.0s/1m0s
+users_2 • [   0% ] waiting  0m29.0s
+users_4 • [   0% ] waiting  1m34.0s
+
+running (0m37.0s), 1/6 VUs, 15 complete and 0 interrupted iterations
+users_1   [  62% ] 1 VUs    0m37.0s/1m0s
+users_2 • [   0% ] waiting  0m28.0s
+users_4 • [   0% ] waiting  1m33.0s
+
+running (0m38.0s), 1/6 VUs, 15 complete and 0 interrupted iterations
+users_1   [  63% ] 1 VUs    0m38.0s/1m0s
+users_2 • [   0% ] waiting  0m27.0s
+users_4 • [   0% ] waiting  1m32.0s
+
+running (0m39.0s), 1/6 VUs, 15 complete and 0 interrupted iterations
+users_1   [  65% ] 1 VUs    0m39.0s/1m0s
+users_2 • [   0% ] waiting  0m26.0s
+users_4 • [   0% ] waiting  1m31.0s
+time="2026-10-31T10:45:07+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m40.0s), 1/6 VUs, 16 complete and 0 interrupted iterations
+users_1   [  67% ] 1 VUs    0m40.0s/1m0s
+users_2 • [   0% ] waiting  0m25.0s
+users_4 • [   0% ] waiting  1m30.0s
+
+running (0m41.0s), 1/6 VUs, 17 complete and 0 interrupted iterations
+users_1   [  68% ] 1 VUs    0m41.0s/1m0s
+users_2 • [   0% ] waiting  0m24.0s
+users_4 • [   0% ] waiting  1m29.0s
+
+running (0m42.0s), 1/6 VUs, 17 complete and 0 interrupted iterations
+users_1   [  70% ] 1 VUs    0m42.0s/1m0s
+users_2 • [   0% ] waiting  0m23.0s
+users_4 • [   0% ] waiting  1m28.0s
+
+running (0m43.0s), 1/6 VUs, 17 complete and 0 interrupted iterations
+users_1   [  72% ] 1 VUs    0m43.0s/1m0s
+users_2 • [   0% ] waiting  0m22.0s
+users_4 • [   0% ] waiting  1m27.0s
+
+running (0m44.0s), 1/6 VUs, 18 complete and 0 interrupted iterations
+users_1   [  73% ] 1 VUs    0m44.0s/1m0s
+users_2 • [   0% ] waiting  0m21.0s
+users_4 • [   0% ] waiting  1m26.0s
+
+running (0m45.0s), 1/6 VUs, 18 complete and 0 interrupted iterations
+users_1   [  75% ] 1 VUs    0m45.0s/1m0s
+users_2 • [   0% ] waiting  0m20.0s
+users_4 • [   0% ] waiting  1m25.0s
+
+running (0m46.0s), 1/6 VUs, 18 complete and 0 interrupted iterations
+users_1   [  77% ] 1 VUs    0m46.0s/1m0s
+users_2 • [   0% ] waiting  0m19.0s
+users_4 • [   0% ] waiting  1m24.0s
+
+running (0m47.0s), 1/6 VUs, 18 complete and 0 interrupted iterations
+users_1   [  78% ] 1 VUs    0m47.0s/1m0s
+users_2 • [   0% ] waiting  0m18.0s
+users_4 • [   0% ] waiting  1m23.0s
+
+running (0m48.0s), 1/6 VUs, 19 complete and 0 interrupted iterations
+users_1   [  80% ] 1 VUs    0m48.0s/1m0s
+users_2 • [   0% ] waiting  0m17.0s
+users_4 • [   0% ] waiting  1m22.0s
+
+running (0m49.0s), 1/6 VUs, 19 complete and 0 interrupted iterations
+users_1   [  82% ] 1 VUs    0m49.0s/1m0s
+users_2 • [   0% ] waiting  0m16.0s
+users_4 • [   0% ] waiting  1m21.0s
+
+running (0m50.0s), 1/6 VUs, 19 complete and 0 interrupted iterations
+users_1   [  83% ] 1 VUs    0m50.0s/1m0s
+users_2 • [   0% ] waiting  0m15.0s
+users_4 • [   0% ] waiting  1m20.0s
+
+running (0m51.0s), 1/6 VUs, 19 complete and 0 interrupted iterations
+users_1   [  85% ] 1 VUs    0m51.0s/1m0s
+users_2 • [   0% ] waiting  0m14.0s
+users_4 • [   0% ] waiting  1m19.0s
+time="2026-10-31T10:45:18+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m52.0s), 1/6 VUs, 20 complete and 0 interrupted iterations
+users_1   [  87% ] 1 VUs    0m52.0s/1m0s
+users_2 • [   0% ] waiting  0m13.0s
+users_4 • [   0% ] waiting  1m18.0s
+
+running (0m53.0s), 1/6 VUs, 21 complete and 0 interrupted iterations
+users_1   [  88% ] 1 VUs    0m53.0s/1m0s
+users_2 • [   0% ] waiting  0m12.0s
+users_4 • [   0% ] waiting  1m17.0s
+
+running (0m54.0s), 1/6 VUs, 21 complete and 0 interrupted iterations
+users_1   [  90% ] 1 VUs    0m54.0s/1m0s
+users_2 • [   0% ] waiting  0m11.0s
+users_4 • [   0% ] waiting  1m16.0s
+
+running (0m55.0s), 1/6 VUs, 21 complete and 0 interrupted iterations
+users_1   [  92% ] 1 VUs    0m55.0s/1m0s
+users_2 • [   0% ] waiting  0m10.0s
+users_4 • [   0% ] waiting  1m15.0s
+time="2026-10-31T10:45:22+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (0m56.0s), 1/6 VUs, 22 complete and 0 interrupted iterations
+users_1   [  93% ] 1 VUs    0m56.0s/1m0s
+users_2 • [   0% ] waiting  0m09.0s
+users_4 • [   0% ] waiting  1m14.0s
+
+running (0m57.0s), 1/6 VUs, 23 complete and 0 interrupted iterations
+users_1   [  95% ] 1 VUs    0m57.0s/1m0s
+users_2 • [   0% ] waiting  0m08.0s
+users_4 • [   0% ] waiting  1m13.0s
+
+running (0m58.0s), 1/6 VUs, 23 complete and 0 interrupted iterations
+users_1   [  97% ] 1 VUs    0m58.0s/1m0s
+users_2 • [   0% ] waiting  0m07.0s
+users_4 • [   0% ] waiting  1m12.0s
+
+running (0m59.0s), 1/6 VUs, 23 complete and 0 interrupted iterations
+users_1   [  98% ] 1 VUs    0m59.0s/1m0s
+users_2 • [   0% ] waiting  0m06.0s
+users_4 • [   0% ] waiting  1m11.0s
+
+running (1m00.0s), 1/6 VUs, 24 complete and 0 interrupted iterations
+users_1   [ 100% ] 1 VUs    1m00.0s/1m0s
+users_2 • [   0% ] waiting  0m05.0s
+users_4 • [   0% ] waiting  1m10.0s
+
+running (1m01.0s), 1/6 VUs, 24 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m04.0s
+users_4 • [   0% ] waiting  1m09.0s
+
+running (1m02.0s), 1/6 VUs, 24 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m03.0s
+users_4 • [   0% ] waiting  1m08.0s
+
+running (1m03.0s), 0/6 VUs, 25 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m02.0s
+users_4 • [   0% ] waiting  1m07.0s
+
+running (1m04.0s), 0/6 VUs, 25 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m01.0s
+users_4 • [   0% ] waiting  1m06.0s
+
+running (1m05.0s), 0/6 VUs, 25 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m00.0s
+users_4 • [   0% ] waiting  1m05.0s
+
+running (1m06.0s), 2/6 VUs, 25 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [   2% ] 2 VUs    0m01.0s/1m0s
+users_4 • [   0% ] waiting  1m04.0s
+
+running (1m07.0s), 2/6 VUs, 25 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [   3% ] 2 VUs    0m02.0s/1m0s
+users_4 • [   0% ] waiting  1m03.0s
+
+running (1m08.0s), 2/6 VUs, 25 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [   5% ] 2 VUs    0m03.0s/1m0s
+users_4 • [   0% ] waiting  1m02.0s
+
+running (1m09.0s), 2/6 VUs, 27 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [   7% ] 2 VUs    0m04.0s/1m0s
+users_4 • [   0% ] waiting  1m01.0s
+
+running (1m10.0s), 2/6 VUs, 27 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [   8% ] 2 VUs    0m05.0s/1m0s
+users_4 • [   0% ] waiting  1m00.0s
+
+running (1m11.0s), 2/6 VUs, 27 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  10% ] 2 VUs    0m06.0s/1m0s
+users_4 • [   0% ] waiting  0m59.0s
+
+running (1m12.0s), 2/6 VUs, 27 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  12% ] 2 VUs    0m07.0s/1m0s
+users_4 • [   0% ] waiting  0m58.0s
+time="2026-10-31T10:45:39+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m13.0s), 2/6 VUs, 29 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  13% ] 2 VUs    0m08.0s/1m0s
+users_4 • [   0% ] waiting  0m57.0s
+
+running (1m14.0s), 2/6 VUs, 30 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  15% ] 2 VUs    0m09.0s/1m0s
+users_4 • [   0% ] waiting  0m56.0s
+
+running (1m15.0s), 2/6 VUs, 30 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  17% ] 2 VUs    0m10.0s/1m0s
+users_4 • [   0% ] waiting  0m55.0s
+
+running (1m16.0s), 2/6 VUs, 31 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  18% ] 2 VUs    0m11.0s/1m0s
+users_4 • [   0% ] waiting  0m54.0s
+time="2026-10-31T10:45:43+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m17.0s), 2/6 VUs, 32 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  20% ] 2 VUs    0m12.0s/1m0s
+users_4 • [   0% ] waiting  0m53.0s
+
+running (1m18.0s), 2/6 VUs, 33 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  22% ] 2 VUs    0m13.0s/1m0s
+users_4 • [   0% ] waiting  0m52.0s
+time="2026-10-31T10:45:46+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m19.0s), 2/6 VUs, 34 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  23% ] 2 VUs    0m14.0s/1m0s
+users_4 • [   0% ] waiting  0m51.0s
+
+running (1m20.0s), 2/6 VUs, 35 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  25% ] 2 VUs    0m15.0s/1m0s
+users_4 • [   0% ] waiting  0m50.0s
+time="2026-10-31T10:45:48+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m21.0s), 2/6 VUs, 36 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  27% ] 2 VUs    0m16.0s/1m0s
+users_4 • [   0% ] waiting  0m49.0s
+
+running (1m22.0s), 2/6 VUs, 37 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  28% ] 2 VUs    0m17.0s/1m0s
+users_4 • [   0% ] waiting  0m48.0s
+
+running (1m23.0s), 2/6 VUs, 38 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  30% ] 2 VUs    0m18.0s/1m0s
+users_4 • [   0% ] waiting  0m47.0s
+
+running (1m24.0s), 2/6 VUs, 38 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  32% ] 2 VUs    0m19.0s/1m0s
+users_4 • [   0% ] waiting  0m46.0s
+
+running (1m25.0s), 2/6 VUs, 39 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  33% ] 2 VUs    0m20.0s/1m0s
+users_4 • [   0% ] waiting  0m45.0s
+time="2026-10-31T10:45:53+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m26.0s), 2/6 VUs, 40 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  35% ] 2 VUs    0m21.0s/1m0s
+users_4 • [   0% ] waiting  0m44.0s
+
+running (1m27.0s), 2/6 VUs, 41 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  37% ] 2 VUs    0m22.0s/1m0s
+users_4 • [   0% ] waiting  0m43.0s
+time="2026-10-31T10:45:55+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m28.0s), 2/6 VUs, 42 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  38% ] 2 VUs    0m23.0s/1m0s
+users_4 • [   0% ] waiting  0m42.0s
+
+running (1m29.0s), 2/6 VUs, 43 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  40% ] 2 VUs    0m24.0s/1m0s
+users_4 • [   0% ] waiting  0m41.0s
+
+running (1m30.0s), 2/6 VUs, 43 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  42% ] 2 VUs    0m25.0s/1m0s
+users_4 • [   0% ] waiting  0m40.0s
+
+running (1m31.0s), 2/6 VUs, 44 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  43% ] 2 VUs    0m26.0s/1m0s
+users_4 • [   0% ] waiting  0m39.0s
+
+running (1m32.0s), 2/6 VUs, 45 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  45% ] 2 VUs    0m27.0s/1m0s
+users_4 • [   0% ] waiting  0m38.0s
+
+running (1m33.0s), 2/6 VUs, 45 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  47% ] 2 VUs    0m28.0s/1m0s
+users_4 • [   0% ] waiting  0m37.0s
+
+running (1m34.0s), 2/6 VUs, 46 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  48% ] 2 VUs    0m29.0s/1m0s
+users_4 • [   0% ] waiting  0m36.0s
+
+running (1m35.0s), 2/6 VUs, 46 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  50% ] 2 VUs    0m30.0s/1m0s
+users_4 • [   0% ] waiting  0m35.0s
+
+running (1m36.0s), 2/6 VUs, 47 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  52% ] 2 VUs    0m31.0s/1m0s
+users_4 • [   0% ] waiting  0m34.0s
+
+running (1m37.0s), 2/6 VUs, 48 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  53% ] 2 VUs    0m32.0s/1m0s
+users_4 • [   0% ] waiting  0m33.0s
+
+running (1m38.0s), 2/6 VUs, 48 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  55% ] 2 VUs    0m33.0s/1m0s
+users_4 • [   0% ] waiting  0m32.0s
+
+running (1m39.0s), 2/6 VUs, 49 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  57% ] 2 VUs    0m34.0s/1m0s
+users_4 • [   0% ] waiting  0m31.0s
+time="2026-10-31T10:46:07+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m40.0s), 2/6 VUs, 50 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  58% ] 2 VUs    0m35.0s/1m0s
+users_4 • [   0% ] waiting  0m30.0s
+
+running (1m41.0s), 2/6 VUs, 51 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  60% ] 2 VUs    0m36.0s/1m0s
+users_4 • [   0% ] waiting  0m29.0s
+time="2026-10-31T10:46:08+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m42.0s), 2/6 VUs, 52 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  62% ] 2 VUs    0m37.0s/1m0s
+users_4 • [   0% ] waiting  0m28.0s
+
+running (1m43.0s), 2/6 VUs, 53 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  63% ] 2 VUs    0m38.0s/1m0s
+users_4 • [   0% ] waiting  0m27.0s
+
+running (1m44.0s), 2/6 VUs, 54 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  65% ] 2 VUs    0m39.0s/1m0s
+users_4 • [   0% ] waiting  0m26.0s
+
+running (1m45.0s), 2/6 VUs, 54 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  67% ] 2 VUs    0m40.0s/1m0s
+users_4 • [   0% ] waiting  0m25.0s
+
+running (1m46.0s), 2/6 VUs, 55 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  68% ] 2 VUs    0m41.0s/1m0s
+users_4 • [   0% ] waiting  0m24.0s
+time="2026-10-31T10:46:14+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m47.0s), 2/6 VUs, 56 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  70% ] 2 VUs    0m42.0s/1m0s
+users_4 • [   0% ] waiting  0m23.0s
+
+running (1m48.0s), 2/6 VUs, 57 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  72% ] 2 VUs    0m43.0s/1m0s
+users_4 • [   0% ] waiting  0m22.0s
+
+running (1m49.0s), 2/6 VUs, 58 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  73% ] 2 VUs    0m44.0s/1m0s
+users_4 • [   0% ] waiting  0m21.0s
+
+running (1m50.0s), 2/6 VUs, 58 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  75% ] 2 VUs    0m45.0s/1m0s
+users_4 • [   0% ] waiting  0m20.0s
+
+running (1m51.0s), 2/6 VUs, 58 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  77% ] 2 VUs    0m46.0s/1m0s
+users_4 • [   0% ] waiting  0m19.0s
+time="2026-10-31T10:46:18+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+time="2026-10-31T10:46:19+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m52.0s), 2/6 VUs, 60 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  78% ] 2 VUs    0m47.0s/1m0s
+users_4 • [   0% ] waiting  0m18.0s
+
+running (1m53.0s), 2/6 VUs, 62 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  80% ] 2 VUs    0m48.0s/1m0s
+users_4 • [   0% ] waiting  0m17.0s
+
+running (1m54.0s), 2/6 VUs, 62 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  82% ] 2 VUs    0m49.0s/1m0s
+users_4 • [   0% ] waiting  0m16.0s
+
+running (1m55.0s), 2/6 VUs, 62 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  83% ] 2 VUs    0m50.0s/1m0s
+users_4 • [   0% ] waiting  0m15.0s
+time="2026-10-31T10:46:23+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m56.0s), 2/6 VUs, 63 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  85% ] 2 VUs    0m51.0s/1m0s
+users_4 • [   0% ] waiting  0m14.0s
+time="2026-10-31T10:46:23+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (1m57.0s), 2/6 VUs, 65 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  87% ] 2 VUs    0m52.0s/1m0s
+users_4 • [   0% ] waiting  0m13.0s
+
+running (1m58.0s), 2/6 VUs, 66 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  88% ] 2 VUs    0m53.0s/1m0s
+users_4 • [   0% ] waiting  0m12.0s
+
+running (1m59.0s), 2/6 VUs, 66 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  90% ] 2 VUs    0m54.0s/1m0s
+users_4 • [   0% ] waiting  0m11.0s
+
+running (2m00.0s), 2/6 VUs, 66 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  92% ] 2 VUs    0m55.0s/1m0s
+users_4 • [   0% ] waiting  0m10.0s
+
+running (2m01.0s), 2/6 VUs, 68 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  93% ] 2 VUs    0m56.0s/1m0s
+users_4 • [   0% ] waiting  0m09.0s
+
+running (2m02.0s), 2/6 VUs, 68 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  95% ] 2 VUs    0m57.0s/1m0s
+users_4 • [   0% ] waiting  0m08.0s
+
+running (2m03.0s), 2/6 VUs, 68 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  97% ] 2 VUs    0m58.0s/1m0s
+users_4 • [   0% ] waiting  0m07.0s
+
+running (2m04.0s), 2/6 VUs, 68 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  98% ] 2 VUs    0m59.0s/1m0s
+users_4 • [   0% ] waiting  0m06.0s
+time="2026-10-31T10:46:31+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (2m05.0s), 2/6 VUs, 70 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [ 100% ] 2 VUs    1m00.0s/1m0s
+users_4 • [   0% ] waiting  0m05.0s
+
+running (2m06.0s), 1/6 VUs, 71 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 ↓ [ 100% ] 2 VUs    1m0s
+users_4 • [   0% ] waiting  0m04.0s
+
+running (2m07.0s), 1/6 VUs, 71 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 ↓ [ 100% ] 2 VUs    1m0s
+users_4 • [   0% ] waiting  0m03.0s
+
+running (2m08.0s), 0/6 VUs, 72 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 ✓ [ 100% ] 2 VUs    1m0s
+users_4 • [   0% ] waiting  0m02.0s
+
+running (2m09.0s), 0/6 VUs, 72 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 ✓ [ 100% ] 2 VUs    1m0s
+users_4 • [   0% ] waiting  0m01.0s
+
+running (2m10.0s), 0/6 VUs, 72 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 ✓ [ 100% ] 2 VUs    1m0s
+users_4 • [   0% ] waiting  0m00.0s
+
+running (2m11.0s), 4/6 VUs, 72 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [   2% ] 4 VUs  0m01.0s/1m0s
+
+running (2m12.0s), 4/6 VUs, 72 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [   3% ] 4 VUs  0m02.0s/1m0s
+
+running (2m13.0s), 4/6 VUs, 72 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [   5% ] 4 VUs  0m03.0s/1m0s
+
+running (2m14.0s), 4/6 VUs, 72 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [   7% ] 4 VUs  0m04.0s/1m0s
+
+running (2m15.0s), 4/6 VUs, 74 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [   8% ] 4 VUs  0m05.0s/1m0s
+time="2026-10-31T10:46:43+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+time="2026-10-31T10:46:43+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (2m16.0s), 4/6 VUs, 74 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  10% ] 4 VUs  0m06.0s/1m0s
+
+running (2m17.0s), 4/6 VUs, 76 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  12% ] 4 VUs  0m07.0s/1m0s
+
+running (2m18.0s), 4/6 VUs, 76 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  13% ] 4 VUs  0m08.0s/1m0s
+
+running (2m19.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  15% ] 4 VUs  0m09.0s/1m0s
+
+running (2m20.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  17% ] 4 VUs  0m10.0s/1m0s
+
+running (2m21.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  18% ] 4 VUs  0m11.0s/1m0s
+
+running (2m22.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  20% ] 4 VUs  0m12.0s/1m0s
+
+running (2m23.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  22% ] 4 VUs  0m13.0s/1m0s
+
+running (2m24.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  23% ] 4 VUs  0m14.0s/1m0s
+
+running (2m25.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  25% ] 4 VUs  0m15.0s/1m0s
+
+running (2m26.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  27% ] 4 VUs  0m16.0s/1m0s
+
+running (2m27.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  28% ] 4 VUs  0m17.0s/1m0s
+
+running (2m28.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  30% ] 4 VUs  0m18.0s/1m0s
+
+running (2m29.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  32% ] 4 VUs  0m19.0s/1m0s
+time="2026-10-31T10:46:56+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+time="2026-10-31T10:46:56+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (2m30.0s), 4/6 VUs, 78 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  33% ] 4 VUs  0m20.0s/1m0s
+
+running (2m31.0s), 4/6 VUs, 82 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  35% ] 4 VUs  0m21.0s/1m0s
+
+running (2m32.0s), 4/6 VUs, 82 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  37% ] 4 VUs  0m22.0s/1m0s
+
+running (2m33.0s), 4/6 VUs, 82 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  38% ] 4 VUs  0m23.0s/1m0s
+
+running (2m34.0s), 4/6 VUs, 82 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  40% ] 4 VUs  0m24.0s/1m0s
+
+running (2m35.0s), 4/6 VUs, 82 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  42% ] 4 VUs  0m25.0s/1m0s
+
+running (2m36.0s), 4/6 VUs, 83 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  43% ] 4 VUs  0m26.0s/1m0s
+time="2026-10-31T10:47:04+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (2m37.0s), 4/6 VUs, 84 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  45% ] 4 VUs  0m27.0s/1m0s
+time="2026-10-31T10:47:05+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (2m38.0s), 4/6 VUs, 85 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  47% ] 4 VUs  0m28.0s/1m0s
+
+running (2m39.0s), 4/6 VUs, 86 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  48% ] 4 VUs  0m29.0s/1m0s
+time="2026-10-31T10:47:07+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (2m40.0s), 4/6 VUs, 87 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  50% ] 4 VUs  0m30.0s/1m0s
+
+running (2m41.0s), 4/6 VUs, 89 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  52% ] 4 VUs  0m31.0s/1m0s
+
+running (2m42.0s), 4/6 VUs, 89 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  53% ] 4 VUs  0m32.0s/1m0s
+
+running (2m43.0s), 4/6 VUs, 89 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  55% ] 4 VUs  0m33.0s/1m0s
+
+running (2m44.0s), 4/6 VUs, 89 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  57% ] 4 VUs  0m34.0s/1m0s
+
+running (2m45.0s), 4/6 VUs, 89 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  58% ] 4 VUs  0m35.0s/1m0s
+
+running (2m46.0s), 4/6 VUs, 90 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  60% ] 4 VUs  0m36.0s/1m0s
+
+running (2m47.0s), 4/6 VUs, 91 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  62% ] 4 VUs  0m37.0s/1m0s
+
+running (2m48.0s), 4/6 VUs, 91 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  63% ] 4 VUs  0m38.0s/1m0s
+
+running (2m49.0s), 4/6 VUs, 91 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  65% ] 4 VUs  0m39.0s/1m0s
+
+running (2m50.0s), 4/6 VUs, 93 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  67% ] 4 VUs  0m40.0s/1m0s
+
+running (2m51.0s), 4/6 VUs, 93 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  68% ] 4 VUs  0m41.0s/1m0s
+
+running (2m52.0s), 4/6 VUs, 93 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  70% ] 4 VUs  0m42.0s/1m0s
+
+running (2m53.0s), 4/6 VUs, 94 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  72% ] 4 VUs  0m43.0s/1m0s
+
+running (2m54.0s), 4/6 VUs, 95 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  73% ] 4 VUs  0m44.0s/1m0s
+
+running (2m55.0s), 4/6 VUs, 95 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  75% ] 4 VUs  0m45.0s/1m0s
+
+running (2m56.0s), 4/6 VUs, 95 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  77% ] 4 VUs  0m46.0s/1m0s
+
+running (2m57.0s), 4/6 VUs, 95 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  78% ] 4 VUs  0m47.0s/1m0s
+time="2026-10-31T10:47:25+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+time="2026-10-31T10:47:25+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (2m58.0s), 4/6 VUs, 97 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  80% ] 4 VUs  0m48.0s/1m0s
+
+running (2m59.0s), 4/6 VUs, 100 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  82% ] 4 VUs  0m49.0s/1m0s
+
+running (3m00.0s), 4/6 VUs, 101 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  83% ] 4 VUs  0m50.0s/1m0s
+
+running (3m01.0s), 4/6 VUs, 101 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  85% ] 4 VUs  0m51.0s/1m0s
+
+running (3m02.0s), 4/6 VUs, 101 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  87% ] 4 VUs  0m52.0s/1m0s
+
+running (3m03.0s), 4/6 VUs, 103 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  88% ] 4 VUs  0m53.0s/1m0s
+time="2026-10-31T10:47:31+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+time="2026-10-31T10:47:31+05:30" level=warning msg="Request Failed" error="Post \"http://127.0.0.1:18080/v1/chat/completions\": EOF"
+
+running (3m04.0s), 4/6 VUs, 103 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  90% ] 4 VUs  0m54.0s/1m0s
+
+running (3m05.0s), 4/6 VUs, 105 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  92% ] 4 VUs  0m55.0s/1m0s
+
+running (3m06.0s), 4/6 VUs, 105 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  93% ] 4 VUs  0m56.0s/1m0s
+
+running (3m07.0s), 4/6 VUs, 107 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  95% ] 4 VUs  0m57.0s/1m0s
+
+running (3m08.0s), 4/6 VUs, 107 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  97% ] 4 VUs  0m58.0s/1m0s
+
+running (3m09.0s), 4/6 VUs, 107 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [  98% ] 4 VUs  0m59.0s/1m0s
+
+running (3m10.0s), 4/6 VUs, 107 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4   [ 100% ] 4 VUs  1m00.0s/1m0s
+
+running (3m11.0s), 4/6 VUs, 107 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ↓ [ 100% ] 4 VUs  1m0s
+
+running (3m12.0s), 2/6 VUs, 109 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ↓ [ 100% ] 4 VUs  1m0s
+
+running (3m13.0s), 2/6 VUs, 109 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ↓ [ 100% ] 4 VUs  1m0s
+
+running (3m14.0s), 2/6 VUs, 109 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ↓ [ 100% ] 4 VUs  1m0s
+
+running (3m15.0s), 2/6 VUs, 109 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ↓ [ 100% ] 4 VUs  1m0s
+
+running (3m16.0s), 2/6 VUs, 109 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ↓ [ 100% ] 4 VUs  1m0s
+
+running (3m17.0s), 2/6 VUs, 109 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ↓ [ 100% ] 4 VUs  1m0s
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.5' rate=29.72%
+
+      {users:1}
+      ✗ 'rate<0.01' rate=32.00%
+
+      {users:4}
+      ✗ 'rate<0.05' rate=28.20%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 111    0.56164/s
+    checks_succeeded...: 70.27% 78 out of 111
+    checks_failed......: 29.72% 33 out of 111
+
+    ✗ status 200
+      ↳  70% — ✓ 78 / ✗ 33
+
+    CUSTOM
+    stream_chunks..................: 2418   12.234655/s
+    ttft_ms........................: avg=1.38s min=411µs med=901.1ms max=10.92s p(90)=3.78s p(95)=4.33s 
+
+    HTTP
+    http_req_duration..............: avg=2.98s min=477µs med=2.15s   max=12.43s p(90)=7.45s p(95)=9.26s 
+      { expected_response:true }...: avg=3.86s min=2.03s med=2.38s   max=12.43s p(90)=7.45s p(95)=9.21s 
+    http_req_failed................: 29.72% 33 out of 111
+      { users:1 }..................: 32.00% 8 out of 25
+      { users:4 }..................: 28.20% 11 out of 39
+    http_reqs......................: 111    0.56164/s
+
+    EXECUTION
+    iteration_duration.............: avg=3.99s min=1s    med=3.15s   max=13.44s p(90)=8.45s p(95)=10.27s
+    iterations.....................: 111    0.56164/s
+    vus............................: 2      min=0         max=4
+    vus_max........................: 6      min=6         max=6
+
+    NETWORK
+    data_received..................: 650 kB 3.3 kB/s
+    data_sent......................: 45 kB  225 B/s
+
+
+
+
+running (3m17.6s), 0/6 VUs, 111 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs  1m0s
+users_2 ✓ [ 100% ] 2 VUs  1m0s
+users_4 ✓ [ 100% ] 4 VUs  1m0s
+time="2026-10-31T10:47:45+05:30" level=error msg="thresholds on metrics 'http_req_failed{users:1}, http_req_failed{users:4}' have been crossed"

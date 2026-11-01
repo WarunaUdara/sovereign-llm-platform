@@ -1,0 +1,583 @@
+head: /etc/llm/api-keys/api-keys: Permission denied
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: /scripts/k6-streaming.js
+        output: -
+
+     scenarios: (100.00%) 3 scenarios, 6 max VUs, 3m40s max duration (incl. graceful stop):
+              * users_1: 1 looping VUs for 1m0s (exec: chat, gracefulStop: 30s)
+              * users_2: 2 looping VUs for 1m0s (exec: chat, startTime: 1m5s, gracefulStop: 30s)
+              * users_4: 4 looping VUs for 1m0s (exec: chat, startTime: 2m10s, gracefulStop: 30s)
+
+
+running (0m01.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   2% ] 1 VUs    0m01.0s/1m0s
+users_2 • [   0% ] waiting  1m04.0s
+users_4 • [   0% ] waiting  2m09.0s
+
+running (0m02.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   3% ] 1 VUs    0m02.0s/1m0s
+users_2 • [   0% ] waiting  1m03.0s
+users_4 • [   0% ] waiting  2m08.0s
+
+running (0m03.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   5% ] 1 VUs    0m03.0s/1m0s
+users_2 • [   0% ] waiting  1m02.0s
+users_4 • [   0% ] waiting  2m07.0s
+
+running (0m04.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   7% ] 1 VUs    0m04.0s/1m0s
+users_2 • [   0% ] waiting  1m01.0s
+users_4 • [   0% ] waiting  2m06.0s
+
+running (0m05.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [   8% ] 1 VUs    0m05.0s/1m0s
+users_2 • [   0% ] waiting  1m00.0s
+users_4 • [   0% ] waiting  2m05.0s
+
+running (0m06.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  10% ] 1 VUs    0m06.0s/1m0s
+users_2 • [   0% ] waiting  0m59.0s
+users_4 • [   0% ] waiting  2m04.0s
+
+running (0m07.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  12% ] 1 VUs    0m07.0s/1m0s
+users_2 • [   0% ] waiting  0m58.0s
+users_4 • [   0% ] waiting  2m03.0s
+
+running (0m08.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  13% ] 1 VUs    0m08.0s/1m0s
+users_2 • [   0% ] waiting  0m57.0s
+users_4 • [   0% ] waiting  2m02.0s
+
+running (0m09.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  15% ] 1 VUs    0m09.0s/1m0s
+users_2 • [   0% ] waiting  0m56.0s
+users_4 • [   0% ] waiting  2m01.0s
+
+running (0m10.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  17% ] 1 VUs    0m10.0s/1m0s
+users_2 • [   0% ] waiting  0m55.0s
+users_4 • [   0% ] waiting  2m00.0s
+
+running (0m11.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  18% ] 1 VUs    0m11.0s/1m0s
+users_2 • [   0% ] waiting  0m54.0s
+users_4 • [   0% ] waiting  1m59.0s
+
+running (0m12.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  20% ] 1 VUs    0m12.0s/1m0s
+users_2 • [   0% ] waiting  0m53.0s
+users_4 • [   0% ] waiting  1m58.0s
+
+running (0m13.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  22% ] 1 VUs    0m13.0s/1m0s
+users_2 • [   0% ] waiting  0m52.0s
+users_4 • [   0% ] waiting  1m57.0s
+
+running (0m14.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  23% ] 1 VUs    0m14.0s/1m0s
+users_2 • [   0% ] waiting  0m51.0s
+users_4 • [   0% ] waiting  1m56.0s
+
+running (0m15.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  25% ] 1 VUs    0m15.0s/1m0s
+users_2 • [   0% ] waiting  0m50.0s
+users_4 • [   0% ] waiting  1m55.0s
+
+running (0m16.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  27% ] 1 VUs    0m16.0s/1m0s
+users_2 • [   0% ] waiting  0m49.0s
+users_4 • [   0% ] waiting  1m54.0s
+
+running (0m17.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  28% ] 1 VUs    0m17.0s/1m0s
+users_2 • [   0% ] waiting  0m48.0s
+users_4 • [   0% ] waiting  1m53.0s
+
+running (0m18.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  30% ] 1 VUs    0m18.0s/1m0s
+users_2 • [   0% ] waiting  0m47.0s
+users_4 • [   0% ] waiting  1m52.0s
+
+running (0m19.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  32% ] 1 VUs    0m19.0s/1m0s
+users_2 • [   0% ] waiting  0m46.0s
+users_4 • [   0% ] waiting  1m51.0s
+
+running (0m20.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  33% ] 1 VUs    0m20.0s/1m0s
+users_2 • [   0% ] waiting  0m45.0s
+users_4 • [   0% ] waiting  1m50.0s
+
+running (0m21.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  35% ] 1 VUs    0m21.0s/1m0s
+users_2 • [   0% ] waiting  0m44.0s
+users_4 • [   0% ] waiting  1m49.0s
+
+running (0m22.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  37% ] 1 VUs    0m22.0s/1m0s
+users_2 • [   0% ] waiting  0m43.0s
+users_4 • [   0% ] waiting  1m48.0s
+
+running (0m23.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  38% ] 1 VUs    0m23.0s/1m0s
+users_2 • [   0% ] waiting  0m42.0s
+users_4 • [   0% ] waiting  1m47.0s
+
+running (0m24.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  40% ] 1 VUs    0m24.0s/1m0s
+users_2 • [   0% ] waiting  0m41.0s
+users_4 • [   0% ] waiting  1m46.0s
+
+running (0m25.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  42% ] 1 VUs    0m25.0s/1m0s
+users_2 • [   0% ] waiting  0m40.0s
+users_4 • [   0% ] waiting  1m45.0s
+
+running (0m26.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  43% ] 1 VUs    0m26.0s/1m0s
+users_2 • [   0% ] waiting  0m39.0s
+users_4 • [   0% ] waiting  1m44.0s
+
+running (0m27.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  45% ] 1 VUs    0m27.0s/1m0s
+users_2 • [   0% ] waiting  0m38.0s
+users_4 • [   0% ] waiting  1m43.0s
+
+running (0m28.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  47% ] 1 VUs    0m28.0s/1m0s
+users_2 • [   0% ] waiting  0m37.0s
+users_4 • [   0% ] waiting  1m42.0s
+
+running (0m29.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  48% ] 1 VUs    0m29.0s/1m0s
+users_2 • [   0% ] waiting  0m36.0s
+users_4 • [   0% ] waiting  1m41.0s
+
+running (0m30.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  50% ] 1 VUs    0m30.0s/1m0s
+users_2 • [   0% ] waiting  0m35.0s
+users_4 • [   0% ] waiting  1m40.0s
+
+running (0m31.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  52% ] 1 VUs    0m31.0s/1m0s
+users_2 • [   0% ] waiting  0m34.0s
+users_4 • [   0% ] waiting  1m39.0s
+
+running (0m32.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  53% ] 1 VUs    0m32.0s/1m0s
+users_2 • [   0% ] waiting  0m33.0s
+users_4 • [   0% ] waiting  1m38.0s
+
+running (0m33.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  55% ] 1 VUs    0m33.0s/1m0s
+users_2 • [   0% ] waiting  0m32.0s
+users_4 • [   0% ] waiting  1m37.0s
+
+running (0m34.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  57% ] 1 VUs    0m34.0s/1m0s
+users_2 • [   0% ] waiting  0m31.0s
+users_4 • [   0% ] waiting  1m36.0s
+
+running (0m35.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  58% ] 1 VUs    0m35.0s/1m0s
+users_2 • [   0% ] waiting  0m30.0s
+users_4 • [   0% ] waiting  1m35.0s
+
+running (0m36.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  60% ] 1 VUs    0m36.0s/1m0s
+users_2 • [   0% ] waiting  0m29.0s
+users_4 • [   0% ] waiting  1m34.0s
+
+running (0m37.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  62% ] 1 VUs    0m37.0s/1m0s
+users_2 • [   0% ] waiting  0m28.0s
+users_4 • [   0% ] waiting  1m33.0s
+
+running (0m38.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  63% ] 1 VUs    0m38.0s/1m0s
+users_2 • [   0% ] waiting  0m27.0s
+users_4 • [   0% ] waiting  1m32.0s
+
+running (0m39.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  65% ] 1 VUs    0m39.0s/1m0s
+users_2 • [   0% ] waiting  0m26.0s
+users_4 • [   0% ] waiting  1m31.0s
+
+running (0m40.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  67% ] 1 VUs    0m40.0s/1m0s
+users_2 • [   0% ] waiting  0m25.0s
+users_4 • [   0% ] waiting  1m30.0s
+
+running (0m41.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  68% ] 1 VUs    0m41.0s/1m0s
+users_2 • [   0% ] waiting  0m24.0s
+users_4 • [   0% ] waiting  1m29.0s
+
+running (0m42.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  70% ] 1 VUs    0m42.0s/1m0s
+users_2 • [   0% ] waiting  0m23.0s
+users_4 • [   0% ] waiting  1m28.0s
+
+running (0m43.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  72% ] 1 VUs    0m43.0s/1m0s
+users_2 • [   0% ] waiting  0m22.0s
+users_4 • [   0% ] waiting  1m27.0s
+
+running (0m44.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  73% ] 1 VUs    0m44.0s/1m0s
+users_2 • [   0% ] waiting  0m21.0s
+users_4 • [   0% ] waiting  1m26.0s
+
+running (0m45.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  75% ] 1 VUs    0m45.0s/1m0s
+users_2 • [   0% ] waiting  0m20.0s
+users_4 • [   0% ] waiting  1m25.0s
+
+running (0m46.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  77% ] 1 VUs    0m46.0s/1m0s
+users_2 • [   0% ] waiting  0m19.0s
+users_4 • [   0% ] waiting  1m24.0s
+
+running (0m47.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  78% ] 1 VUs    0m47.0s/1m0s
+users_2 • [   0% ] waiting  0m18.0s
+users_4 • [   0% ] waiting  1m23.0s
+
+running (0m48.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  80% ] 1 VUs    0m48.0s/1m0s
+users_2 • [   0% ] waiting  0m17.0s
+users_4 • [   0% ] waiting  1m22.0s
+
+running (0m49.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  82% ] 1 VUs    0m49.0s/1m0s
+users_2 • [   0% ] waiting  0m16.0s
+users_4 • [   0% ] waiting  1m21.0s
+
+running (0m50.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  83% ] 1 VUs    0m50.0s/1m0s
+users_2 • [   0% ] waiting  0m15.0s
+users_4 • [   0% ] waiting  1m20.0s
+
+running (0m51.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  85% ] 1 VUs    0m51.0s/1m0s
+users_2 • [   0% ] waiting  0m14.0s
+users_4 • [   0% ] waiting  1m19.0s
+
+running (0m52.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  87% ] 1 VUs    0m52.0s/1m0s
+users_2 • [   0% ] waiting  0m13.0s
+users_4 • [   0% ] waiting  1m18.0s
+
+running (0m53.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  88% ] 1 VUs    0m53.0s/1m0s
+users_2 • [   0% ] waiting  0m12.0s
+users_4 • [   0% ] waiting  1m17.0s
+
+running (0m54.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  90% ] 1 VUs    0m54.0s/1m0s
+users_2 • [   0% ] waiting  0m11.0s
+users_4 • [   0% ] waiting  1m16.0s
+
+running (0m55.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  92% ] 1 VUs    0m55.0s/1m0s
+users_2 • [   0% ] waiting  0m10.0s
+users_4 • [   0% ] waiting  1m15.0s
+
+running (0m56.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  93% ] 1 VUs    0m56.0s/1m0s
+users_2 • [   0% ] waiting  0m09.0s
+users_4 • [   0% ] waiting  1m14.0s
+
+running (0m57.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  95% ] 1 VUs    0m57.0s/1m0s
+users_2 • [   0% ] waiting  0m08.0s
+users_4 • [   0% ] waiting  1m13.0s
+
+running (0m58.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  97% ] 1 VUs    0m58.0s/1m0s
+users_2 • [   0% ] waiting  0m07.0s
+users_4 • [   0% ] waiting  1m12.0s
+
+running (0m59.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [  98% ] 1 VUs    0m59.0s/1m0s
+users_2 • [   0% ] waiting  0m06.0s
+users_4 • [   0% ] waiting  1m11.0s
+
+running (1m00.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1   [ 100% ] 1 VUs    1m00.0s/1m0s
+users_2 • [   0% ] waiting  0m05.0s
+users_4 • [   0% ] waiting  1m10.0s
+
+running (1m01.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m04.0s
+users_4 • [   0% ] waiting  1m09.0s
+
+running (1m02.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m03.0s
+users_4 • [   0% ] waiting  1m08.0s
+
+running (1m03.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m02.0s
+users_4 • [   0% ] waiting  1m07.0s
+
+running (1m04.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m01.0s
+users_4 • [   0% ] waiting  1m06.0s
+
+running (1m05.0s), 1/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2 • [   0% ] waiting  0m00.0s
+users_4 • [   0% ] waiting  1m05.0s
+
+running (1m06.0s), 3/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2   [   2% ] 2 VUs    0m01.0s/1m0s
+users_4 • [   0% ] waiting  1m04.0s
+
+running (1m07.0s), 3/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2   [   3% ] 2 VUs    0m02.0s/1m0s
+users_4 • [   0% ] waiting  1m03.0s
+
+running (1m08.0s), 3/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2   [   5% ] 2 VUs    0m03.0s/1m0s
+users_4 • [   0% ] waiting  1m02.0s
+
+running (1m09.0s), 3/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2   [   7% ] 2 VUs    0m04.0s/1m0s
+users_4 • [   0% ] waiting  1m01.0s
+
+running (1m10.0s), 3/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2   [   8% ] 2 VUs    0m05.0s/1m0s
+users_4 • [   0% ] waiting  1m00.0s
+time="2026-10-31T05:29:23Z" level=warning msg="Request Failed" error="Post \"http://model-endpoint.llm-serving.svc.cluster.local:8080/v1/chat/completions\": request timeout"
+time="2026-10-31T05:29:23Z" level=warning msg="Request Failed" error="Post \"http://model-endpoint.llm-serving.svc.cluster.local:8080/v1/chat/completions\": request timeout"
+time="2026-10-31T05:29:23Z" level=warning msg="Request Failed" error="Post \"http://model-endpoint.llm-serving.svc.cluster.local:8080/v1/chat/completions\": request timeout"
+
+running (1m11.0s), 3/6 VUs, 0 complete and 0 interrupted iterations
+users_1 ↓ [ 100% ] 1 VUs    1m0s
+users_2   [  10% ] 2 VUs    0m06.0s/1m0s
+users_4 • [   0% ] waiting  0m59.0s
+
+running (1m12.0s), 2/6 VUs, 3 complete and 0 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2   [  12% ] 2 VUs    0m07.0s/1m0s
+users_4 • [   0% ] waiting  0m58.0s
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✗ 'rate<0.5' rate=100.00%
+
+      {users:1}
+      ✗ 'rate<0.01' rate=100.00%
+
+      {users:4}
+      ✓ 'rate<0.05' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 3       0.041668/s
+    checks_succeeded...: 0.00%   0 out of 3
+    checks_failed......: 100.00% 3 out of 3
+
+    ✗ status 200
+      ↳  0% — ✓ 0 / ✗ 3
+
+    CUSTOM
+    stream_chunks........: 0       0/s
+    ttft_ms..............: avg=0s     min=0s    med=0s    max=0s    p(90)=0s     p(95)=0s  
+
+    HTTP
+    http_req_duration....: avg=0s     min=0s    med=0s    max=0s    p(90)=0s     p(95)=0s  
+    http_req_failed......: 100.00% 3 out of 3
+      { users:1 }........: 100.00% 1 out of 1
+      { users:4 }........: 0.00%   0 out of 0
+    http_reqs............: 3       0.041668/s
+
+    EXECUTION
+    iteration_duration...: avg=27.67s min=6.01s med=6.01s max=1m11s p(90)=58.01s p(95)=1m4s
+    iterations...........: 3       0.041668/s
+    vus..................: 2       min=1      max=3
+    vus_max..............: 6       min=6      max=6
+
+    NETWORK
+    data_received........: 0 B     0 B/s
+    data_sent............: 0 B     0 B/s
+
+
+
+
+running (1m12.0s), 0/6 VUs, 3 complete and 2 interrupted iterations
+users_1 ✓ [ 100% ] 1 VUs    1m0s
+users_2 ✗ [  12% ] 2 VUs    0m07.0s/1m0s
+users_4 • [   0% ] waiting  0m58.0s
+time="2026-10-31T05:29:28Z" level=error msg="thresholds on metrics 'http_req_failed, http_req_failed{users:1}' were crossed; at least one has abortOnFail enabled, stopping test prematurely"
+=== SUMMARY-JSON ===
+{
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "status 200": {
+                    "path": "::status 200",
+                    "id": "fad9fa412b86fcb03bee97c80dcd61f1",
+                    "passes": 0,
+                    "fails": 3,
+                    "name": "status 200"
+                }
+            }
+    },
+    "metrics": {
+        "data_received": {
+            "count": 0,
+            "rate": 0
+        },
+        "http_req_waiting": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "checks": {
+            "passes": 0,
+            "fails": 3,
+            "value": 0
+        },
+        "http_req_connecting": {
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0
+        },
+        "ttft_ms": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_failed{users:4}": {
+            "passes": 0,
+            "fails": 0,
+            "thresholds": {
+                "rate<0.05": false
+            },
+            "value": 0
+        },
+        "vus_max": {
+            "value": 6,
+            "min": 6,
+            "max": 6
+        },
+        "http_req_sending": {
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0
+        },
+        "http_req_receiving": {
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0
+        },
+        "data_sent": {
+            "count": 0,
+            "rate": 0
+        },
+        "http_req_duration": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "iteration_duration": {
+            "avg": 27678.272003333335,
+            "min": 6011.043921,
+            "med": 6011.424094,
+            "max": 71012.347995,
+            "p(90)": 58012.163214800006,
+            "p(95)": 64512.2556049
+        },
+        "stream_chunks": {
+            "count": 0,
+            "rate": 0
+        },
+        "http_req_failed": {
+            "passes": 3,
+            "fails": 0,
+            "thresholds": {
+                "rate<0.5": true
+            },
+            "value": 1
+        },
+        "iterations": {
+            "count": 3,
+            "rate": 0.041667491802219674
+        },
+        "vus": {
+            "value": 2,
+            "min": 1,
+            "max": 3
+        },
+        "http_reqs": {
+            "count": 3,
+            "rate": 0.041667491802219674
+        },
+        "http_req_blocked": {
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_failed{users:1}": {
+            "passes": 1,
+            "fails": 0,
+            "thresholds": {
+                "rate<0.01": true
+            },
+            "value": 1
+        }
+    }
+}

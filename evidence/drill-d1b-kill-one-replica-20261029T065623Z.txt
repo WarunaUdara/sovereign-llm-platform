@@ -1,0 +1,4 @@
+# D1b kill one of two model replicas, probe the service for 40 s from the chat namespace
+hypothesis: no failed probes, because the other replica keeps serving
+result: ok=79 bad=0
+verdict: hypothesis held

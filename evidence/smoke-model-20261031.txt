@@ -1,0 +1,19 @@
+== reachability and auth
+  PASS  GET /health answers
+  PASS  no key -> 401 (got 401)
+  PASS  wrong key -> 401 (got 401)
+== OpenAI-compatible API
+  PASS  GET /v1/models lists qwen2.5-0.5b-instruct
+  PASS  non-stream chat completion returns choices
+    sample: Pong!
+  PASS  streamed completion is SSE and ends with [DONE]
+== Anthropic-compatible API (recorded, not assumed)
+  PASS  POST /v1/messages (Anthropic shape) returns 200
+== limits
+  PASS  oversized prompt rejected with 4xx (got 400)
+== privacy: prompt body must not reach logs
+  PASS  sentinel prompt absent from pod logs
+== network isolation (GKE: nodes have no internet route; the test target is a Google API the nodes CAN reach)
+  PASS  model pod egress to Google API is blocked by NetworkPolicy
+
+result: 10 passed, 0 failed

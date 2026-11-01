@@ -1,0 +1,45 @@
+# captured 2026-10-28T21:31:57Z project=llm-k8s-experimental cluster=llm-lab
+## nodes
+NAME                                  STATUS   ROLES    AGE   VERSION               INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                             KERNEL-VERSION      CONTAINER-RUNTIME
+gke-llm-lab-inference-d7b6f002-jgk8   Ready    <none>   11m   v1.36.4-gke.2046003   10.10.0.3     <none>        Container-Optimized OS from Google   6.12.105+ (amd64)   containerd://2.2.7
+## llm-serving pods (digest-pinned image)
+NAME                              READY   STATUS    RESTARTS   AGE    IP           NODE                                  NOMINATED NODE   READINESS GATES
+model-endpoint-5f76656d97-d284t   1/1     Running   0          8m5s   10.20.0.14   gke-llm-lab-inference-d7b6f002-jgk8   <none>           <none>
+us-central1-docker.pkg.dev/llm-k8s-experimental/llm-lab-images/model-endpoint@sha256:1042f4fb199f50e7d0e8156b0acfee2cfcec2ff669015f42272b6f8cfa0966f7
+## networkpolicies
+NAME                                  POD-SELECTOR                            AGE
+default-deny-all                      <none>                                  8m5s
+model-endpoint-ingress-from-gateway   app.kubernetes.io/name=model-endpoint   8m4s
+## pod security labels
+NAME          STATUS   AGE     LABELS
+llm-serving   Active   8m19s   app.kubernetes.io/part-of=sovereign-llm,kubernetes.io/metadata.name=llm-serving,pod-security.kubernetes.io/audit=restricted,pod-security.kubernetes.io/enforce-version=latest,pod-security.kubernetes.io/enforce=restricted,pod-security.kubernetes.io/warn=restricted
+## model pod securityContext
+{"fsGroup":10001,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001,"seccompProfile":{"type":"RuntimeDefault"}}
+{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}
+## egress control comparison (same destination, Google API)
+control pod, default namespace, no policy: http=404 (reachable)
+model pod, llm-serving, under NetworkPolicy: timed out (exit 28, blocked)
+public internet from any pod: fails (nodes have no internet route; no Cloud NAT by design)
+## cluster security settings
+currentMasterVersion: 1.36.4-gke.2046003
+loggingConfig:
+  componentConfig:
+    enableComponents:
+    - SYSTEM_COMPONENTS
+masterAuthorizedNetworksConfig:
+  cidrBlocks:
+  - cidrBlock: 203.0.113.10/32
+    displayName: operator
+  enabled: true
+  privateEndpointEnforcementEnabled: true
+networkConfig:
+  datapathProvider: ADVANCED_DATAPATH
+privateClusterConfig:
+  enablePrivateNodes: true
+  publicEndpoint: 136.80.238.2
+releaseChannel:
+  channel: REGULAR
+shieldedNodes:
+  enabled: true
+workloadIdentityConfig:
+  workloadPool: llm-k8s-experimental.svc.id.goog
